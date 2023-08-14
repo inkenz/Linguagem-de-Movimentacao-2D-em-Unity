@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.0-SNAPSHOT
+// Generated from java-escape by ANTLR 4.11.1
 package br.ufscar.dc.compiladores.t6;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -97,6 +97,16 @@ public interface MovUnityListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAttr_mouse(MovUnityParser.Attr_mouseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MovUnityParser#templates}.
+	 * @param ctx the parse tree
+	 */
+	void enterTemplates(MovUnityParser.TemplatesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MovUnityParser#templates}.
+	 * @param ctx the parse tree
+	 */
+	void exitTemplates(MovUnityParser.TemplatesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MovUnityParser#parcela_logica}.
 	 * @param ctx the parse tree

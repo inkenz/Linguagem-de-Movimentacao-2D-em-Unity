@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.0-SNAPSHOT
+// Generated from java-escape by ANTLR 4.11.1
 package br.ufscar.dc.compiladores.t6;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -120,6 +120,18 @@ public class MovUnityBaseListener implements MovUnityListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAttr_mouse(MovUnityParser.Attr_mouseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTemplates(MovUnityParser.TemplatesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTemplates(MovUnityParser.TemplatesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -42,11 +42,11 @@ public class MyCustomErrorListener implements ANTLRErrorListener {
         if (!erro){
             Token t = (Token) offendingSymbol;
             String tokenText = t.getText();
-
+            
             if (tokenText == "<EOF>"){
                 tokenText = "EOF";
             }
-
+            
             erro = true;
             pw.println("Linha " + line + ": erro sintatico proximo a " + tokenText);
         }

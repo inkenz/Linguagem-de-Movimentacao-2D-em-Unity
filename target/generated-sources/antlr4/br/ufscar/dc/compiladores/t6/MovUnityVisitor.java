@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.0-SNAPSHOT
+// Generated from java-escape by ANTLR 4.11.1
 package br.ufscar.dc.compiladores.t6;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -64,6 +64,12 @@ public interface MovUnityVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAttr_mouse(MovUnityParser.Attr_mouseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MovUnityParser#templates}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTemplates(MovUnityParser.TemplatesContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MovUnityParser#parcela_logica}.
 	 * @param ctx the parse tree

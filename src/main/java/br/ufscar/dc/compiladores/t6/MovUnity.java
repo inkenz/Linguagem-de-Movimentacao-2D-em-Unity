@@ -38,10 +38,10 @@ public class MovUnity
                     pw.println("Linha "+t.getLine()+": comentario nao fechado");
                     lexError = true;
                     break;
-                } else {
+                }/* else {
                     pw.println("<'" + t.getText() + "'," + nomeToken + ">");
                 } 
-               
+               */
             }
             
             //Análise Sintática após verificação Léxica

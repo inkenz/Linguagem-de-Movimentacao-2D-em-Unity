@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.0-SNAPSHOT
+// Generated from java-escape by ANTLR 4.11.1
 package br.ufscar.dc.compiladores.t6;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -75,6 +75,13 @@ public class MovUnityBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitAttr_mouse(MovUnityParser.Attr_mouseContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTemplates(MovUnityParser.TemplatesContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

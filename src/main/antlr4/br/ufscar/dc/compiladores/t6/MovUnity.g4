@@ -48,23 +48,25 @@ IGNORE:
 //SINTÁTICO
 
 //Formato do programa
-gameobject: GAMEOBJECT ABREPAR NOME FECHAPAR ABRECHAVE definicoes FECHACHAVE;
+gameobject: GAMEOBJECT ABREPAR NOME ',' templates FECHAPAR ABRECHAVE definicoes FECHACHAVE EOF;
 
 //Definições
-definicoes: TEMPLATE DOISPONTOS TOPDOWN def_topdown | 
-            TEMPLATE DOISPONTOS SIDESCROLLING def_sidescrolling;
+definicoes: def_topdown | def_sidescrolling;
 def_topdown: VELOCIDADE DOISPONTOS NUM controles; 
-def_sidescrolling: VELOCIDADE DOISPONTOS NUM GRAVIDADE DOISPONTOS NUM controles;
+def_sidescrolling: ((VELOCIDADE DOISPONTOS vel=NUM GRAVIDADE DOISPONTOS grav=NUM) 
+                    | (GRAVIDADE DOISPONTOS grav=NUM VELOCIDADE DOISPONTOS vel=NUM))
+                    controles;
 
 //Controles
-controles: CONTROLES DOISPONTOS teclado | mouse;
+controles: CONTROLES DOISPONTOS (teclado | mouse);
 teclado: TECLADO ABRECHAVE attr_teclado FECHACHAVE;
 attr_teclado: MODO DOISPONTOS modos_teclado 
-((PULO DOISPONTOS botoes_teclado) | (DIAGONAL DOISPONTOS parcela_logica))?
+((PULO DOISPONTOS botoes_teclado) | (DIAGONAL DOISPONTOS parcela_logica))? 
 ;
 mouse: MOUSE ABRECHAVE attr_mouse FECHACHAVE;
 attr_mouse: MODO DOISPONTOS modos_mouse (BOTAO DOISPONTOS botoes_mouse)?;
 
+templates: SIDESCROLLING | TOPDOWN;
 //Valores
 parcela_logica:
     VERDADEIRO | FALSO
