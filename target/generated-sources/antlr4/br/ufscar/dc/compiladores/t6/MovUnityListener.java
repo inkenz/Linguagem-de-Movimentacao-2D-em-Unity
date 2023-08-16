@@ -28,25 +28,15 @@ public interface MovUnityListener extends ParseTreeListener {
 	 */
 	void exitDefinicoes(MovUnityParser.DefinicoesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#def_topdown}.
+	 * Enter a parse tree produced by {@link MovUnityParser#def_atributos}.
 	 * @param ctx the parse tree
 	 */
-	void enterDef_topdown(MovUnityParser.Def_topdownContext ctx);
+	void enterDef_atributos(MovUnityParser.Def_atributosContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#def_topdown}.
+	 * Exit a parse tree produced by {@link MovUnityParser#def_atributos}.
 	 * @param ctx the parse tree
 	 */
-	void exitDef_topdown(MovUnityParser.Def_topdownContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#def_sidescrolling}.
-	 * @param ctx the parse tree
-	 */
-	void enterDef_sidescrolling(MovUnityParser.Def_sidescrollingContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#def_sidescrolling}.
-	 * @param ctx the parse tree
-	 */
-	void exitDef_sidescrolling(MovUnityParser.Def_sidescrollingContext ctx);
+	void exitDef_atributos(MovUnityParser.Def_atributosContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MovUnityParser#controles}.
 	 * @param ctx the parse tree

@@ -1,5 +1,6 @@
 package br.ufscar.dc.compiladores.t6;
 
+import br.ufscar.dc.compiladores.t6.MovUnityParser.GameobjectContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.FileWriter;
@@ -58,28 +59,28 @@ public class MovUnity
 
                 parser.gameobject();
             }
-            /*
+           
             cs = CharStreams.fromFileName(args[0]);
-            lex = new LALexer(cs);
+            lex = new MovUnityLexer(cs);
             CommonTokenStream tokens = new CommonTokenStream(lex);
-            LAParser parser = new LAParser(tokens);
+            MovUnityParser parser = new MovUnityParser(tokens);
 
             parser.removeErrorListeners();
 
-            ProgramaContext arvore = parser.programa();
-            LinguagemLAVisitor as = new LinguagemLAVisitor();
+            GameobjectContext arvore = parser.gameobject();
+            MovUnitySemantico as = new MovUnitySemantico();
 
-            as.visitPrograma(arvore);
-            LinguagemLAUtils.errosSemanticos.forEach((s) -> pw.println(s));
-            
-            if(LinguagemLAUtils.errosSemanticos.isEmpty()) {
-                LAGeradorC agc = new LAGeradorC();
-                agc.visitPrograma(arvore);
+            as.visitGameobject(arvore);
+            MovUnityVisitorUtils.errosSemanticos.forEach((s) -> pw.println(s));
+          
+            if(MovUnityVisitorUtils.errosSemanticos.isEmpty()) {
+                MovUnityGeradorScript agc = new MovUnityGeradorScript();
+                agc.visitGameobject(arvore);
                 pw.print(agc.saida.toString());
             }
 
             pw.close();
-*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }

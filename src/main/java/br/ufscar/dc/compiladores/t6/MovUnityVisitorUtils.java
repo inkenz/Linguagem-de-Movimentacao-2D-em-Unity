@@ -91,4 +91,27 @@ public class MovUnityVisitorUtils {
        
         return "";
     }
+    
+    public static String ConverterParaKeyCode(String key)
+    {
+        switch(key)
+        {
+            case "espaco":
+                return "KeyCode.Space";
+            default:
+                return "ERRO";
+        }
+    }
+    
+    public static String ConverterParaKeyCode(MovUnityParser.Botoes_tecladoContext ctx)
+    {
+        String key = verificarBotoesTeclado(ctx);
+        switch(key)
+        {
+            case "espaco":
+                return "KeyCode.Space";
+            default:
+                return "ERRO";
+        }
+    }
 }

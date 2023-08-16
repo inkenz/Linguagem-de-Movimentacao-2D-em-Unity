@@ -23,17 +23,11 @@ public interface MovUnityVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDefinicoes(MovUnityParser.DefinicoesContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#def_topdown}.
+	 * Visit a parse tree produced by {@link MovUnityParser#def_atributos}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDef_topdown(MovUnityParser.Def_topdownContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#def_sidescrolling}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDef_sidescrolling(MovUnityParser.Def_sidescrollingContext ctx);
+	T visitDef_atributos(MovUnityParser.Def_atributosContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MovUnityParser#controles}.
 	 * @param ctx the parse tree

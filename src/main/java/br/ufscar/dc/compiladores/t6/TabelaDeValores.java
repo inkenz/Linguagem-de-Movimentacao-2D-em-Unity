@@ -23,7 +23,8 @@ public class TabelaDeValores {
         tabela.put("velocidade", null);
         tabela.put("gravidade", null);
         tabela.put("modo", null);
-        tabela.put("pulo", null);
+        tabela.put("puloControle", null);
+        tabela.put("puloImpulso", null);
         
         
         return tabela;
@@ -38,4 +39,14 @@ public class TabelaDeValores {
         }
         return true;
     } 
+    
+    public static String RetornarAtributoFaltando(HashMap<String, String> tabela) {
+        for (String atributo : tabela.keySet()) {
+            String valor = tabela.get(atributo);
+            if (valor == null || valor.isEmpty()) {
+                return atributo;
+            }
+        }
+        return null; 
+    }
 }

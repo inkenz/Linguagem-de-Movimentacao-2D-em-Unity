@@ -8,6 +8,7 @@ import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosTe
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarParcelaLogica;
 
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarTemplate;
+import static br.ufscar.dc.compiladores.t6.TabelaDeValores.RetornarAtributoFaltando;
 import static br.ufscar.dc.compiladores.t6.TabelaDeValores.VerificarTabela;
 import static java.lang.Float.parseFloat;
 import java.util.HashMap;
@@ -30,34 +31,32 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         {
             tabela = TabelaDeValores.TemplateTopDown();
         }
+        tabela.put("nome", ctx.NOME().getText());
         
         return super.visitGameobject(ctx); 
     }
 
     @Override
-    public Object visitDef_topdown(MovUnityParser.Def_topdownContext ctx) {
-        String vel = ctx.NUM().getText();
-        if(parseFloat(vel) <= 0)
-            adicionarErroSemantico(ctx.NUM().getSymbol(), "A velocidade só pode assumir valores positivos maiores que 0");
-        tabela.put("velocidade", vel);
-        
-        return super.visitDef_topdown(ctx); 
-    }
-
-    @Override
-    public Object visitDef_sidescrolling(MovUnityParser.Def_sidescrollingContext ctx) {
+    public Object visitDef_atributos(MovUnityParser.Def_atributosContext ctx) {
         String vel = ctx.vel.getText();
         if(parseFloat(vel) <= 0)
             adicionarErroSemantico(ctx.VELOCIDADE().getSymbol(), "A velocidade só pode assumir valores positivos maiores que 0");
         tabela.put("velocidade", vel);
         
-        String grav = ctx.grav.getText();
-        if(parseFloat(grav) < 0)
-            adicionarErroSemantico(ctx.GRAVIDADE().getSymbol(), "A gravidade só pode assumir valores positivos");
-        tabela.put("gravidade", grav);
+        if(ctx.GRAVIDADE() != null){
+            if(tabela.get("template").equals("top-down")){
+                adicionarErroSemantico(ctx.GRAVIDADE().getSymbol(), "O template escolhido não possui o atributo gravidade");
+            }
+            else{
+                String grav = ctx.grav.getText();
+                if(parseFloat(grav) < 0)
+                    adicionarErroSemantico(ctx.GRAVIDADE().getSymbol(), "A gravidade só pode assumir valores positivos");
+                tabela.put("gravidade", grav);
+            }
+        }
         
         
-        return super.visitDef_sidescrolling(ctx);
+        return super.visitDef_atributos(ctx);
     }
 
     @Override
@@ -66,6 +65,10 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         tabela.put("modo", modo);
         if(modo.equals("clique")){
             tabela.put("botao", verificarBotoesMouse(ctx.botoes_mouse()));
+        }
+        
+        if(!VerificarTabela(tabela)){
+            adicionarErroSemantico(ctx.getStart(),"Atribulo "+RetornarAtributoFaltando(tabela)+" não declarado");
         }
         
         return super.visitAttr_mouse(ctx); 
@@ -79,15 +82,25 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
     public Object visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx) {
         String template = tabela.get("template");
         tabela.put("modo", verificarModosTeclado(ctx.modos_teclado()));
-        switch(template){
-            case "top-down":
-                if(ctx.DIAGONAL() != null) 
-                    tabela.put("diagonal", verificarParcelaLogica(ctx.parcela_logica()));
-            case "side-scrolling":
-                if(ctx.PULO() != null)
-                    tabela.put("pulo", verificarBotoesTeclado(ctx.botoes_teclado()));
+        
+
+        if(ctx.DIAGONAL() != null) 
+            tabela.put("diagonal", verificarParcelaLogica(ctx.parcela_logica()));
+        if(ctx.PULOCONTROLE() != null)
+            tabela.put("puloControle", verificarBotoesTeclado(ctx.botoes_teclado()));
+        if(ctx.PULOIMPULSO() != null)
+            tabela.put("puloImpulso", ctx.NUM().getText());
+        
+        if(template.equals("side-scrolling") && tabela.containsKey("diagonal"))
+            adicionarErroSemantico(ctx.parcela_logica().getStart(),"Atribulo diagonal não pertence a este template");
                 
+               
+        
+        
+        if(!VerificarTabela(tabela)){
+            adicionarErroSemantico(ctx.getStart(),"Atribulo "+RetornarAtributoFaltando(tabela)+" não declarado");
         }
+        
         return super.visitAttr_teclado(ctx);
     }
 

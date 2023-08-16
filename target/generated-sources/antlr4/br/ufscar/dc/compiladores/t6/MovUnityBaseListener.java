@@ -41,25 +41,13 @@ public class MovUnityBaseListener implements MovUnityListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDef_topdown(MovUnityParser.Def_topdownContext ctx) { }
+	@Override public void enterDef_atributos(MovUnityParser.Def_atributosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDef_topdown(MovUnityParser.Def_topdownContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDef_sidescrolling(MovUnityParser.Def_sidescrollingContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDef_sidescrolling(MovUnityParser.Def_sidescrollingContext ctx) { }
+	@Override public void exitDef_atributos(MovUnityParser.Def_atributosContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -22,7 +22,9 @@ ESQUERDO: 'ESQUERDO';
 W: 'W';
 ESPACO: 'ESPACO';
 FLECHA: 'FLECHA';
-PULO: 'pulo';
+PULOCONTROLE: 'puloControle';
+PULOIMPULSO: 'puloImpulso';
+
 DIAGONAL: 'diagonal';
 VERDADEIRO: 'VERDADEIRO';
 FALSO: 'FALSO';
@@ -51,17 +53,21 @@ IGNORE:
 gameobject: GAMEOBJECT ABREPAR NOME ',' templates FECHAPAR ABRECHAVE definicoes FECHACHAVE EOF;
 
 //Definições
-definicoes: def_topdown | def_sidescrolling;
-def_topdown: VELOCIDADE DOISPONTOS NUM controles; 
-def_sidescrolling: ((VELOCIDADE DOISPONTOS vel=NUM GRAVIDADE DOISPONTOS grav=NUM) 
-                    | (GRAVIDADE DOISPONTOS grav=NUM VELOCIDADE DOISPONTOS vel=NUM))
-                    controles;
+definicoes: def_atributos;
+
+
+def_atributos: (VELOCIDADE DOISPONTOS vel=NUM) 
+               (GRAVIDADE DOISPONTOS grav=NUM)?
+               controles
+;
 
 //Controles
 controles: CONTROLES DOISPONTOS (teclado | mouse);
 teclado: TECLADO ABRECHAVE attr_teclado FECHACHAVE;
 attr_teclado: MODO DOISPONTOS modos_teclado 
-((PULO DOISPONTOS botoes_teclado) | (DIAGONAL DOISPONTOS parcela_logica))? 
+(PULOCONTROLE DOISPONTOS botoes_teclado)? 
+(PULOIMPULSO DOISPONTOS puloIm=NUM)? 
+(DIAGONAL DOISPONTOS parcela_logica)?
 ;
 mouse: MOUSE ABRECHAVE attr_mouse FECHACHAVE;
 attr_mouse: MODO DOISPONTOS modos_mouse (BOTAO DOISPONTOS botoes_mouse)?;
