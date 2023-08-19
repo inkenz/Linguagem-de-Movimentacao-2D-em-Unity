@@ -1,0 +1,8 @@
+GameObject(nome1, TOP-DOWN){
+    velocidade: -10.5
+
+
+    controles: mouse{
+        
+    }
+}

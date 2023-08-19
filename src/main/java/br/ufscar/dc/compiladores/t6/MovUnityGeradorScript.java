@@ -1,7 +1,9 @@
 package br.ufscar.dc.compiladores.t6;
 
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.ConverterParaKeyCode;
+import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesMouse;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesTeclado;
+import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosMouse;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosTeclado;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarParcelaLogica;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarTemplate;
@@ -61,7 +63,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
     @Override
     public Object visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx) {
         saida.append("void Movement()\n{\n");
-        System.out.print(template);
+
         if(template.equals("top-down")){
             saida.append("        horizontal = 0;\n" +
                         "        vertical = 0;\n");
@@ -151,6 +153,59 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     "        rb.velocity = move * speed;\n");
         saida.append("}\n}");
         return super.visitAttr_teclado(ctx);
+    }
+
+    @Override
+    public Object visitAttr_mouse(MovUnityParser.Attr_mouseContext ctx) {
+       
+        
+        String modo = verificarModosMouse(ctx.modos_mouse());
+        
+        if(modo.equals("clique")) 
+            saida.append("private Vector3 targetPosition;");
+        
+        saida.append("void Movement()\n{\n");
+        if(modo.equals("seguir"))
+        {
+            saida.append
+            ("Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
+"           Vector3 moveDirection = (mousePosition - transform.position).normalized;\n" +
+"           transform.position += moveDirection * speed * Time.deltaTime;\n"
+            );
+        }
+        else if(modo.equals("clique"))
+        {
+            saida.append("if (Input.GetMouseButtonDown(");
+         
+            if(verificarBotoesMouse(ctx.botoes_mouse()).equals("esquerdo"))
+            {
+                saida.append("0");
+            }
+            else if(verificarBotoesMouse(ctx.botoes_mouse()).equals("direito"))
+            {
+                saida.append("1");
+            }
+            saida.append(")\n{\n");
+            saida.append
+            ("            targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
+            "            targetPosition.z = transform.position.z;\n" +
+            "            isMoving = true;\n" +
+            "        }");
+            
+            saida.append("if (isMoving)\n" +
+"        {");
+            saida.append
+            ("        Vector3 moveDirection = (targetPosition - transform.position).normalized; // Calcula a direção para a posição alvo\n" +
+            "        transform.position += moveDirection * speed * Time.deltaTime; // Move o objeto na direção da posição alvo\n" +
+            "        if (Vector3.Distance(transform.position, targetPosition) < 0.1f) // Verifica se chegou perto o suficiente da posição alvo\n" +
+            "        {\n" +
+            "            isMoving = false; // Para o movimento\n" +
+            "        }");
+            saida.append("}");
+        }   
+        
+        saida.append("}");
+        return super.visitAttr_mouse(ctx);
     }
     
     

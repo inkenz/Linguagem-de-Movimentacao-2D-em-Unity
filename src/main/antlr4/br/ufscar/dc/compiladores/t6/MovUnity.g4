@@ -5,7 +5,7 @@ GAMEOBJECT: 'GameObject';
 SIDESCROLLING: 'SIDE-SCROLLING';
 TOPDOWN: 'TOP-DOWN';
 VELOCIDADE: 'velocidade';
-NUM: ('0'..'9')+ ('.' ('0'..'9')+)?;
+NUM: ('-')?('0'..'9')+ ('.' ('0'..'9')+)?;
 GRAVIDADE: 'gravidade';
 CONTROLES: 'controles';
 TECLADO: 'teclado';
@@ -24,7 +24,6 @@ ESPACO: 'ESPACO';
 FLECHA: 'FLECHA';
 PULOCONTROLE: 'puloControle';
 PULOIMPULSO: 'puloImpulso';
-
 DIAGONAL: 'diagonal';
 VERDADEIRO: 'VERDADEIRO';
 FALSO: 'FALSO';
@@ -42,7 +41,7 @@ COMENTARIO_NAO_FECHADO:
     '[' ~('['|']'|'\n'|'\r'|'\t')*;
 
 ERRO:
-    ( '!' | '|' | '@' |'$' | '~' | ']');
+    ( '!' | '|' | '@' |'$' | '~' | ']' | '+');
 IGNORE:
     ( ' ' | '\t' | '\r' | '\n' ) {skip();};
 

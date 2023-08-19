@@ -54,7 +54,12 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
                 tabela.put("gravidade", grav);
             }
         }
-        
+        else
+        {
+            if(tabela.get("template").equals("side-scrolling")){
+                adicionarErroSemantico(ctx.GRAVIDADE().getSymbol(), "Valor de gravidade não declarada");
+            }
+        }
         
         return super.visitDef_atributos(ctx);
     }
@@ -64,7 +69,9 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         String modo = verificarModosMouse(ctx.modos_mouse());
         tabela.put("modo", modo);
         if(modo.equals("clique")){
-            tabela.put("botao", verificarBotoesMouse(ctx.botoes_mouse()));
+            if(ctx.BOTAO() != null){
+                tabela.put("botao", verificarBotoesMouse(ctx.botoes_mouse()));
+            }
         }
         
         if(!VerificarTabela(tabela)){
