@@ -25,13 +25,6 @@ public class MovUnityBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDefinicoes(MovUnityParser.DefinicoesContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitDef_atributos(MovUnityParser.Def_atributosContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

@@ -17,12 +17,6 @@ public interface MovUnityVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGameobject(MovUnityParser.GameobjectContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#definicoes}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDefinicoes(MovUnityParser.DefinicoesContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MovUnityParser#def_atributos}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

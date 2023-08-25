@@ -14,8 +14,11 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
     HashMap<String, String> tabela;
     StringBuilder saida;
     String template;
+    boolean existeAc, existeDesac;
+    
     public MovUnityGeradorScript() {
         saida = new StringBuilder();
+        existeAc = existeDesac = false;
     }
     
     @Override
@@ -40,6 +43,25 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             saida.append("    public float gravity="+ctx.grav.getText()+"f;\n");
         else
             saida.append("    public float gravity=0;\n");  
+        
+        if(ctx.PULOIMPULSO() != null)
+            saida.append("    public float jump="+ctx.puloIm.getText()+"f;\n");
+        
+        if(ctx.ACELERACAO() != null || ctx.DESACELERACAO() != null){
+            saida.append("    private Vector2 currentVelocity = Vector2.zero;\n");
+            if(ctx.ACELERACAO() != null){
+                existeAc = true;
+                saida.append("    public float acceleration="+ctx.ac.getText()+"f;\n");
+            }
+
+            if(ctx.DESACELERACAO() != null){
+                existeDesac = true;
+                saida.append("    public float acceleration="+ctx.desac.getText()+"f;\n");
+            }
+        
+        }
+        
+  
         
         saida.append("\n\n");
         saida.append("    void Start()\n" +
@@ -146,7 +168,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             
             saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.botoes_teclado())+"))\n" +
                         "        {\n" +
-                        "            rb.AddForce(Vector2.up * "+ctx.puloIm.getText()+"f, ForceMode2D.Impulse);\n" +
+                        "            rb.AddForce(Vector2.up * jump, ForceMode2D.Impulse);\n" +
                         "        }\n");
         }
         saida.append("        move.Normalize();\n" +

@@ -18,16 +18,6 @@ public interface MovUnityListener extends ParseTreeListener {
 	 */
 	void exitGameobject(MovUnityParser.GameobjectContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#definicoes}.
-	 * @param ctx the parse tree
-	 */
-	void enterDefinicoes(MovUnityParser.DefinicoesContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#definicoes}.
-	 * @param ctx the parse tree
-	 */
-	void exitDefinicoes(MovUnityParser.DefinicoesContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link MovUnityParser#def_atributos}.
 	 * @param ctx the parse tree
 	 */

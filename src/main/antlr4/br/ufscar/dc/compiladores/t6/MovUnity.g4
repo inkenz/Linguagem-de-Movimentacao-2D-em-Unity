@@ -7,6 +7,8 @@ TOPDOWN: 'TOP-DOWN';
 VELOCIDADE: 'velocidade';
 NUM: ('-')?('0'..'9')+ ('.' ('0'..'9')+)?;
 GRAVIDADE: 'gravidade';
+ACELERACAO: 'aceleracao';
+DESACELERACAO: 'desaceleracao';
 CONTROLES: 'controles';
 TECLADO: 'teclado';
 MOUSE: 'mouse';
@@ -49,14 +51,20 @@ IGNORE:
 //SINTÁTICO
 
 //Formato do programa
-gameobject: GAMEOBJECT ABREPAR NOME ',' templates FECHAPAR ABRECHAVE definicoes FECHACHAVE EOF;
-
-//Definições
-definicoes: def_atributos;
+gameobject: GAMEOBJECT ABREPAR NOME ',' templates FECHAPAR ABRECHAVE def_atributos FECHACHAVE EOF;
 
 
-def_atributos: (VELOCIDADE DOISPONTOS vel=NUM) 
-               (GRAVIDADE DOISPONTOS grav=NUM)?
+def_atributos: ((GRAVIDADE DOISPONTOS grav=NUM) |
+                (ACELERACAO DOISPONTOS ac=NUM) |
+                (DESACELERACAO DOISPONTOS desac=NUM) |
+                (PULOIMPULSO DOISPONTOS puloIm=NUM) 
+                )*
+                (VELOCIDADE DOISPONTOS vel=NUM) 
+               ((GRAVIDADE DOISPONTOS grav=NUM) |
+                (ACELERACAO DOISPONTOS ac=NUM) |
+                (DESACELERACAO DOISPONTOS desac=NUM) |
+                (PULOIMPULSO DOISPONTOS puloIm=NUM)
+                )*
                controles
 ;
 
@@ -65,7 +73,6 @@ controles: CONTROLES DOISPONTOS (teclado | mouse);
 teclado: TECLADO ABRECHAVE attr_teclado FECHACHAVE;
 attr_teclado: MODO DOISPONTOS modos_teclado 
 (PULOCONTROLE DOISPONTOS botoes_teclado)? 
-(PULOIMPULSO DOISPONTOS puloIm=NUM)? 
 (DIAGONAL DOISPONTOS parcela_logica)?
 ;
 mouse: MOUSE ABRECHAVE attr_mouse FECHACHAVE;

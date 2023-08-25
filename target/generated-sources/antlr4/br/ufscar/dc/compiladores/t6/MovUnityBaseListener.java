@@ -29,18 +29,6 @@ public class MovUnityBaseListener implements MovUnityListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDefinicoes(MovUnityParser.DefinicoesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDefinicoes(MovUnityParser.DefinicoesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDef_atributos(MovUnityParser.Def_atributosContext ctx) { }
 	/**
 	 * {@inheritDoc}

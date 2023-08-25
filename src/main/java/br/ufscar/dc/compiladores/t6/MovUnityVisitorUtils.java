@@ -16,6 +16,11 @@ public class MovUnityVisitorUtils {
         errosSemanticos.add(String.format("Linha %d: %s", linha, mensagem));
     }
     
+    public static void adicionarErro(String mensagem) 
+    {
+        errosSemanticos.add(String.format("Erro: %s", mensagem));
+    }
+    
     public static String verificarTemplate(MovUnityParser.TemplatesContext ctx)
     {
         if(ctx.SIDESCROLLING() != null){

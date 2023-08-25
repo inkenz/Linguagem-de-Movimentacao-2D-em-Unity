@@ -72,13 +72,13 @@ public class MovUnity
 
             as.visitGameobject(arvore);
             MovUnityVisitorUtils.errosSemanticos.forEach((s) -> pw.println(s));
-          
+          /*
             if(MovUnityVisitorUtils.errosSemanticos.isEmpty()) {
                 MovUnityGeradorScript agc = new MovUnityGeradorScript();
                 agc.visitGameobject(arvore);
                 pw.print(agc.saida.toString());
             }
-
+*/
             pw.close();
 
         } catch (IOException e) {
