@@ -163,16 +163,31 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                             "            horizontal = 1;\n" +
                             "        }\n");
             }
-            saida.append("        move = new Vector2(horizontal*speed, rb.velocity.y);\n" +
-                        "        rb.velocity = move;\n");
+            saida.append("        move = new Vector2(horizontal*speed, rb.velocity.y);\n");
             
             saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.botoes_teclado())+"))\n" +
                         "        {\n" +
                         "            rb.AddForce(Vector2.up * jump, ForceMode2D.Impulse);\n" +
                         "        }\n");
         }
-        saida.append("        move.Normalize();\n" +
-                    "        rb.velocity = move * speed;\n");
+        saida.append("        move.Normalize();\n");
+        if(existeAc){
+            saida.append("        Vector2 targetVelocity = move * speed;\n");
+            saida.append("        currentVelocity = Vector2.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);\n");
+            saida.append("        rb.velocity = currentVelocity;\n");
+        }
+        if(existeDesac){
+            saida.append("        if (move.magnitude == 0)\n" +
+                        "        {\n" +
+                        "            currentVelocity = Vector2.MoveTowards(currentVelocity, Vector2.zero, deceleration * Time.deltaTime);\n" +
+                        "            move = currentVelocity;\n" +
+                        "        }\n");
+        }
+        
+        if(!existeAc){
+            saida.append("        rb.velocity = move * speed;\n");
+        }
+        
         saida.append("}\n}");
         return super.visitAttr_teclado(ctx);
     }
