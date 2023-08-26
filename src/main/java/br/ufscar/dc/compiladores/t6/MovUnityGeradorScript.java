@@ -28,35 +28,43 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     "using UnityEngine;\n" +
                     "\n" +
                     "public class " +ctx.NOME().getText()+ ": MonoBehaviour\n" +
-                    "{"+
-                "    private Rigidbody2D rb;\n" +
-                "    private Vector2 move;\n" +
-                "    private int vertical, horizontal;\n");
+                    "{\n"+
+                "    private Rigidbody2D rb;\n" 
+                );
         this.template = verificarTemplate(ctx.templates());
         return super.visitGameobject(ctx); 
     }
 
     @Override
     public Object visitDef_atributos(MovUnityParser.Def_atributosContext ctx) {
+        if(template.equals("top-down"))
+            saida.append("    private Vector2 move;\n" +
+                    "    private int vertical, horizontal;\n");
+        else if(template.equals("side-scrolling"))
+            saida.append("    private int horizontal;\n");
+        
         saida.append("    public float speed="+ctx.vel.getText()+"f;\n");
-        if(ctx.GRAVIDADE() != null)
+        if(!ctx.GRAVIDADE().isEmpty())
             saida.append("    public float gravity="+ctx.grav.getText()+"f;\n");
         else
             saida.append("    public float gravity=0;\n");  
         
-        if(ctx.PULOIMPULSO() != null)
+        if(!ctx.PULOIMPULSO().isEmpty())
             saida.append("    public float jump="+ctx.puloIm.getText()+"f;\n");
         
-        if(ctx.ACELERACAO() != null || ctx.DESACELERACAO() != null){
-            saida.append("    private Vector2 currentVelocity = Vector2.zero;\n");
-            if(ctx.ACELERACAO() != null){
+        if(!ctx.ACELERACAO().isEmpty() || !ctx.DESACELERACAO().isEmpty()){
+            if(template.equals("top-down"))
+                saida.append("    private Vector2 currentVelocity = Vector2.zero;\n");
+            else if(template.equals("side-scrolling"))
+                saida.append("    private float currentSpeed = 0;\n");
+            if(!ctx.ACELERACAO().isEmpty()){
                 existeAc = true;
                 saida.append("    public float acceleration="+ctx.ac.getText()+"f;\n");
             }
 
-            if(ctx.DESACELERACAO() != null){
+            if(!ctx.DESACELERACAO().isEmpty()){
                 existeDesac = true;
-                saida.append("    public float acceleration="+ctx.desac.getText()+"f;\n");
+                saida.append("    public float deceleration="+ctx.desac.getText()+"f;\n");
             }
         
         }
@@ -75,9 +83,12 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         saida.append("\n\n");
         saida.append("void Update()\n" +
                     "    {\n" +
-                    "        Movement();\n" +
+                    "        Movement();\n"
+                    );
+        saida.append("        Jump();\n" +
                     "    }"
                     );
+        
         saida.append("\n\n");
         return super.visitDef_atributos(ctx); 
     }
@@ -91,7 +102,13 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                         "        vertical = 0;\n");
             
             String modo = verificarModosTeclado(ctx.modos_teclado());
-            boolean diagonal = verificarParcelaLogica(ctx.parcela_logica()).equals("verdadeiro");
+            boolean diagonal;
+            if(ctx.DIAGONAL() != null)
+                diagonal = verificarParcelaLogica(ctx.parcela_logica()).equals("verdadeiro");
+            else
+                diagonal = true;
+            
+            
             if(modo.equals("WASD"))
             { 
                 saida.append("if(Input.GetKey(KeyCode.A)){\n" +
@@ -102,13 +119,13 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                             "\n" +
                             "        if(Input.GetKey(KeyCode.S)){\n" +
                             "            vertical = -1;\n");
-                if(diagonal)
+                if(!diagonal)
                     saida.append("            horizontal =0;\n");
                 
                 saida.append("        } else if(Input.GetKey(KeyCode.W)){\n" +
                             "            vertical =1;\n");
                 
-                if(diagonal)
+                if(!diagonal)
                     saida.append("            horizontal =0;\n");
                 
                 saida.append("        }\n" +
@@ -124,18 +141,55 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                             "\n" +
                             "        if(Input.GetKey(KeyCode.DownArrow)){\n" +
                             "            vertical = -1;\n");
-                if(diagonal)
+                if(!diagonal)
                     saida.append("            horizontal =0;\n");
                 
                 saida.append("        } else if(Input.GetKey(KeyCode.UpArrow)){\n" +
                             "            vertical =1;\n");
                 
-                if(diagonal)
+                if(!diagonal)
                     saida.append("            horizontal =0;\n");
                 
                 saida.append("        }\n" +
                             "        move = new Vector2(horizontal, vertical);\n"
                 );
+            }
+            
+            saida.append("        move.Normalize();\n");
+            if(existeAc){
+                saida.append("        Vector2 targetVelocity = move * speed;\n");
+                saida.append("        currentVelocity = Vector2.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);\n");
+            }
+            if(existeDesac){
+                saida.append("        if (move.magnitude == 0)\n" +
+                            "        {\n" +
+                            "            currentVelocity = Vector2.MoveTowards(currentVelocity, Vector2.zero, deceleration * Time.deltaTime);\n" +
+
+                            "        }\n");
+            }
+
+            if(existeAc && !existeDesac){
+                saida.append("        if (move.magnitude == 0)\n" +
+                            "        {\n" +
+                            "            currentVelocity = Vector2.zero;\n" +
+
+                            "        }\n");
+
+                saida.append("        rb.velocity = currentVelocity;\n");
+            }
+            else if(!existeAc && existeDesac){
+                saida.append("        else{\n" +
+                            "            currentVelocity = move*speed;\n}\n"+
+                            "        rb.velocity = currentVelocity;\n"
+
+                );
+            }
+            else if(existeAc && existeDesac){
+                saida.append("        rb.velocity = currentVelocity;\n");
+
+            }
+            else{
+                    saida.append("        rb.velocity = move*speed;\n");
             }
         } else if(template.equals("side-scrolling"))
         {
@@ -163,51 +217,42 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                             "            horizontal = 1;\n" +
                             "        }\n");
             }
-            saida.append("        move = new Vector2(horizontal*speed, rb.velocity.y);\n");
             
+            
+            
+            if(!existeAc && !existeDesac)
+                saida.append("rb.velocity = new Vector2( horizontal*speed, rb.velocity.y);\n");
+            else{
+                saida.append("        if(horizontal != 0)\n");
+                if(existeAc)
+                    saida.append("            currentSpeed = Mathf.SmoothStep(currentSpeed, horizontal * speed, acceleration * Time.deltaTime);\n");
+                else
+                    saida.append("            currentSpeed = horizontal * speed;\n");
+                    
+                saida.append("else\n");
+                
+                if(existeDesac)
+                    saida.append("            currentSpeed = Mathf.SmoothStep(currentSpeed, 0, deceleration * Time.deltaTime);\n");
+                else
+                    saida.append("            currentSpeed = 0;\n");
+                
+                saida.append("rb.velocity = new Vector2(currentSpeed, rb.velocity.y);");
+            }
+        }
+        
+        
+        saida.append("}\n");
+        
+        if(template.equals("side-scrolling")){
+            saida.append("     void Jump(){\n");
             saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.botoes_teclado())+"))\n" +
-                        "        {\n" +
-                        "            rb.AddForce(Vector2.up * jump, ForceMode2D.Impulse);\n" +
-                        "        }\n");
-        }
-        saida.append("        move.Normalize();\n");
-        if(existeAc){
-            saida.append("        Vector2 targetVelocity = move * speed;\n");
-            saida.append("        currentVelocity = Vector2.MoveTowards(currentVelocity, targetVelocity, acceleration * Time.deltaTime);\n");
-        }
-        if(existeDesac){
-            saida.append("        if (move.magnitude == 0)\n" +
-                        "        {\n" +
-                        "            currentVelocity = Vector2.MoveTowards(currentVelocity, Vector2.zero, deceleration * Time.deltaTime);\n" +
-                     
-                        "        }\n");
+                            "        {\n" +
+                            "            rb.velocity= new Vector2(rb.velocity.x, jump);\n" +
+                            "        }\n");
+            saida.append("     }\n");
         }
         
-        if(existeAc && !existeDesac){
-            saida.append("        if (move.magnitude == 0)\n" +
-                        "        {\n" +
-                        "            rb.velocity = Vector2.zero" +
-
-                        "        }\n");
-
-            saida.append("        rb.velocity = currentVelocity;\n");
-        }
-        else if(!existeAc && existeDesac){
-            saida.append("        else{\n" +
-                        "            currentVelocity = move*speed;\n}\n"+
-                        "        rb.velocity = currentVelocity;\n"
-                     
-            );
-        }
-        else if(existeAc && existeDesac){
-            saida.append("        rb.velocity = currentVelocity;\n");
-        
-        }
-        else{
-                saida.append("        rb.velocity = move*speed;\n");
-        }
-        
-        saida.append("}\n}");
+        saida.append("}");
         return super.visitAttr_teclado(ctx);
     }
 

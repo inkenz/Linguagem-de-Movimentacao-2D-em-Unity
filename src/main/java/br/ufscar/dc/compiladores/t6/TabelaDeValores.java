@@ -10,7 +10,7 @@ public class TabelaDeValores {
         tabela.put("nome", null);
         tabela.put("velocidade", null);
         tabela.put("modo", null);
-        tabela.put("diagonal", null);
+        tabela.put("diagonal", "verdadeiro");
         
         
         return tabela;

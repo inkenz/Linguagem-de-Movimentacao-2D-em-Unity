@@ -47,7 +47,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         
         // TESTES COM OS ATRIBUTOS NUMÉRICOS
         
-        if(ctx.GRAVIDADE() != null){
+        if(!ctx.GRAVIDADE().isEmpty()){
             if(tabela.get("template").equals("top-down")){
                 adicionarErroSemantico(ctx.GRAVIDADE().get(0).getSymbol(), "O template escolhido não possui o atributo gravidade");
             }
@@ -63,7 +63,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         }
        
         
-        if(ctx.ACELERACAO() != null){
+        if(!ctx.ACELERACAO().isEmpty()){
             if(ctx.ACELERACAO().size() > 1){
                 adicionarErroSemantico(ctx.ACELERACAO().get(1).getSymbol(), "O atributo aceleracao já foi definido");
             }
@@ -75,7 +75,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
         }
         
-        if(ctx.DESACELERACAO() != null){
+        if(!ctx.DESACELERACAO().isEmpty()){
             if(ctx.DESACELERACAO().size() > 1){
                 adicionarErroSemantico(ctx.DESACELERACAO().get(1).getSymbol(), "O atributo desaceleracao já foi definido");
             }
@@ -87,7 +87,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
         }
         
-        if(ctx.PULOIMPULSO() != null){
+        if(!ctx.PULOIMPULSO().isEmpty()){
             if(ctx.PULOIMPULSO().size() > 1){
                 adicionarErroSemantico(ctx.PULOIMPULSO().get(1).getSymbol(), "O atributo puloImpulso já foi definido");
             }

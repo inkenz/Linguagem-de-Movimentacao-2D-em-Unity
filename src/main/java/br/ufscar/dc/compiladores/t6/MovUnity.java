@@ -39,10 +39,10 @@ public class MovUnity
                     pw.println("Linha "+t.getLine()+": comentario nao fechado");
                     lexError = true;
                     break;
-                }/* else {
+                } /*else {
                     pw.println("<'" + t.getText() + "'," + nomeToken + ">");
-                } 
-               */
+                } */
+               
             }
             
             //Análise Sintática após verificação Léxica
@@ -72,13 +72,13 @@ public class MovUnity
 
             as.visitGameobject(arvore);
             MovUnityVisitorUtils.errosSemanticos.forEach((s) -> pw.println(s));
-          /*
+          
             if(MovUnityVisitorUtils.errosSemanticos.isEmpty()) {
                 MovUnityGeradorScript agc = new MovUnityGeradorScript();
                 agc.visitGameobject(arvore);
                 pw.print(agc.saida.toString());
             }
-*/
+
             pw.close();
 
         } catch (IOException e) {
