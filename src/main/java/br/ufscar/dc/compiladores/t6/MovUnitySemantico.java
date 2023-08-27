@@ -175,6 +175,17 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
         }
         
+        if(tabela.containsKey("esquivaControle") || tabela.containsKey("corridaControle")){
+            String erro = "Não é possível atribuir ";
+            if(tabela.containsKey("esquivaControle"))
+                erro += "'esquiva' ";
+            if(tabela.containsKey("corridaControle"))
+                erro += "'corrida' ";
+            erro += "para o tipo de controle mouse";
+            
+            adicionarErro(erro);
+        }
+           
         if(!VerificarTabela(tabela)){
             adicionarErro("Atributo "+RetornarAtributoFaltando(tabela)+" não declarado");
         }
