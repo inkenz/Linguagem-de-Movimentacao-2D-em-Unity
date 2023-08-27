@@ -17,13 +17,14 @@ public class MovUnityParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, GAMEOBJECT=2, SIDESCROLLING=3, TOPDOWN=4, VELOCIDADE=5, NUM=6, 
-		GRAVIDADE=7, ACELERACAO=8, DESACELERACAO=9, CONTROLES=10, TECLADO=11, 
-		MOUSE=12, TEMPLATE=13, MODO=14, WASD=15, FLECHAS=16, CLIQUE=17, SEGUIR=18, 
-		BOTAO=19, DIREITO=20, ESQUERDO=21, W=22, ESPACO=23, FLECHA=24, PULOCONTROLE=25, 
-		PULOIMPULSO=26, DIAGONAL=27, VERDADEIRO=28, FALSO=29, NOME=30, DOISPONTOS=31, 
-		ABREPAR=32, FECHAPAR=33, ABRECHAVE=34, FECHACHAVE=35, COMENTARIO=36, COMENTARIO_NAO_FECHADO=37, 
-		ERRO=38, IGNORE=39;
+		T__0=1, GAMEOBJECT=2, TEMPLATE=3, SIDESCROLLING=4, TOPDOWN=5, GRAVIDADE=6, 
+		ACELERACAO=7, DESACELERACAO=8, VELOCIDADE=9, CONTROLES=10, PULOIMPULSO=11, 
+		CORRIDAVEL=12, ESQUIVAVEL=13, ESQUIVADUR=14, ESQUIVAESP=15, MODO=16, TECLADO=17, 
+		MOUSE=18, BOTAO=19, PULOCONTROLE=20, DIAGONAL=21, CORRIDACON=22, ESQUIVACON=23, 
+		WASD=24, FLECHAS=25, CLIQUE=26, SEGUIR=27, DIREITO=28, ESQUERDO=29, LETRA=30, 
+		FLECHA=31, VERDADEIRO=32, FALSO=33, TECLA=34, NUM=35, NOME=36, DOISPONTOS=37, 
+		ABREPAR=38, FECHAPAR=39, ABRECHAVE=40, FECHACHAVE=41, COMENTARIO=42, COMENTARIO_NAO_FECHADO=43, 
+		CHAVE_NAO_FECHADA=44, ERRO=45, IGNORE=46;
 	public static final int
 		RULE_gameobject = 0, RULE_def_atributos = 1, RULE_controles = 2, RULE_teclado = 3, 
 		RULE_attr_teclado = 4, RULE_mouse = 5, RULE_attr_mouse = 6, RULE_templates = 7, 
@@ -40,23 +41,27 @@ public class MovUnityParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "','", "'GameObject'", "'SIDE-SCROLLING'", "'TOP-DOWN'", "'velocidade'", 
-			null, "'gravidade'", "'aceleracao'", "'desaceleracao'", "'controles'", 
-			"'teclado'", "'mouse'", "'template'", "'modo'", "'WASD'", "'FLECHAS'", 
-			"'CLIQUE'", "'SEGUIR'", "'botao'", "'DIREITO'", "'ESQUERDO'", "'W'", 
-			"'ESPACO'", "'FLECHA'", "'puloControle'", "'puloImpulso'", "'diagonal'", 
-			"'VERDADEIRO'", "'FALSO'", null, "':'", "'('", "')'", "'{'", "'}'"
+			null, "','", "'GameObject'", "'template'", "'SIDE-SCROLLING'", "'TOP-DOWN'", 
+			"'gravidade'", "'aceleracao'", "'desaceleracao'", "'velocidade'", "'controles'", 
+			"'puloImpulso'", "'corridaVelocidade'", "'esquivaVelocidade'", "'esquivaDuracao'", 
+			"'esquivaEspera'", "'modo'", "'teclado'", "'mouse'", "'botao'", "'puloControle'", 
+			"'diagonal'", "'corridaControle'", "'esquivaControle'", "'WASD'", "'FLECHAS'", 
+			"'CLIQUE'", "'SEGUIR'", "'DIREITO'", "'ESQUERDO'", null, "'FLECHA'", 
+			"'VERDADEIRO'", "'FALSO'", null, null, null, "':'", "'('", "')'", "'{'", 
+			"'}'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, "GAMEOBJECT", "SIDESCROLLING", "TOPDOWN", "VELOCIDADE", "NUM", 
-			"GRAVIDADE", "ACELERACAO", "DESACELERACAO", "CONTROLES", "TECLADO", "MOUSE", 
-			"TEMPLATE", "MODO", "WASD", "FLECHAS", "CLIQUE", "SEGUIR", "BOTAO", "DIREITO", 
-			"ESQUERDO", "W", "ESPACO", "FLECHA", "PULOCONTROLE", "PULOIMPULSO", "DIAGONAL", 
-			"VERDADEIRO", "FALSO", "NOME", "DOISPONTOS", "ABREPAR", "FECHAPAR", "ABRECHAVE", 
-			"FECHACHAVE", "COMENTARIO", "COMENTARIO_NAO_FECHADO", "ERRO", "IGNORE"
+			null, null, "GAMEOBJECT", "TEMPLATE", "SIDESCROLLING", "TOPDOWN", "GRAVIDADE", 
+			"ACELERACAO", "DESACELERACAO", "VELOCIDADE", "CONTROLES", "PULOIMPULSO", 
+			"CORRIDAVEL", "ESQUIVAVEL", "ESQUIVADUR", "ESQUIVAESP", "MODO", "TECLADO", 
+			"MOUSE", "BOTAO", "PULOCONTROLE", "DIAGONAL", "CORRIDACON", "ESQUIVACON", 
+			"WASD", "FLECHAS", "CLIQUE", "SEGUIR", "DIREITO", "ESQUERDO", "LETRA", 
+			"FLECHA", "VERDADEIRO", "FALSO", "TECLA", "NUM", "NOME", "DOISPONTOS", 
+			"ABREPAR", "FECHAPAR", "ABRECHAVE", "FECHACHAVE", "COMENTARIO", "COMENTARIO_NAO_FECHADO", 
+			"CHAVE_NAO_FECHADA", "ERRO", "IGNORE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -114,7 +119,6 @@ public class MovUnityParser extends Parser {
 	public static class GameobjectContext extends ParserRuleContext {
 		public TerminalNode GAMEOBJECT() { return getToken(MovUnityParser.GAMEOBJECT, 0); }
 		public TerminalNode ABREPAR() { return getToken(MovUnityParser.ABREPAR, 0); }
-		public TerminalNode NOME() { return getToken(MovUnityParser.NOME, 0); }
 		public TemplatesContext templates() {
 			return getRuleContext(TemplatesContext.class,0);
 		}
@@ -125,6 +129,8 @@ public class MovUnityParser extends Parser {
 		}
 		public TerminalNode FECHACHAVE() { return getToken(MovUnityParser.FECHACHAVE, 0); }
 		public TerminalNode EOF() { return getToken(MovUnityParser.EOF, 0); }
+		public TerminalNode NOME() { return getToken(MovUnityParser.NOME, 0); }
+		public TerminalNode LETRA() { return getToken(MovUnityParser.LETRA, 0); }
 		public GameobjectContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -147,6 +153,7 @@ public class MovUnityParser extends Parser {
 	public final GameobjectContext gameobject() throws RecognitionException {
 		GameobjectContext _localctx = new GameobjectContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_gameobject);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -155,7 +162,15 @@ public class MovUnityParser extends Parser {
 			setState(27);
 			match(ABREPAR);
 			setState(28);
-			match(NOME);
+			_la = _input.LA(1);
+			if ( !(_la==LETRA || _la==NOME) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
 			setState(29);
 			match(T__0);
 			setState(30);
@@ -189,6 +204,10 @@ public class MovUnityParser extends Parser {
 		public Token ac;
 		public Token desac;
 		public Token puloIm;
+		public Token corrvel;
+		public Token esqvel;
+		public Token esqdur;
+		public Token esqesp;
 		public Token vel;
 		public ControlesContext controles() {
 			return getRuleContext(ControlesContext.class,0);
@@ -218,6 +237,22 @@ public class MovUnityParser extends Parser {
 		public TerminalNode PULOIMPULSO(int i) {
 			return getToken(MovUnityParser.PULOIMPULSO, i);
 		}
+		public List<TerminalNode> CORRIDAVEL() { return getTokens(MovUnityParser.CORRIDAVEL); }
+		public TerminalNode CORRIDAVEL(int i) {
+			return getToken(MovUnityParser.CORRIDAVEL, i);
+		}
+		public List<TerminalNode> ESQUIVAVEL() { return getTokens(MovUnityParser.ESQUIVAVEL); }
+		public TerminalNode ESQUIVAVEL(int i) {
+			return getToken(MovUnityParser.ESQUIVAVEL, i);
+		}
+		public List<TerminalNode> ESQUIVADUR() { return getTokens(MovUnityParser.ESQUIVADUR); }
+		public TerminalNode ESQUIVADUR(int i) {
+			return getToken(MovUnityParser.ESQUIVADUR, i);
+		}
+		public List<TerminalNode> ESQUIVAESP() { return getTokens(MovUnityParser.ESQUIVAESP); }
+		public TerminalNode ESQUIVAESP(int i) {
+			return getToken(MovUnityParser.ESQUIVAESP, i);
+		}
 		public Def_atributosContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -244,12 +279,12 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(51);
+			setState(63);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 67109760L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 63936L) != 0) {
 				{
-				setState(49);
+				setState(61);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case GRAVIDADE:
@@ -300,38 +335,86 @@ public class MovUnityParser extends Parser {
 					}
 					}
 					break;
+				case CORRIDAVEL:
+					{
+					{
+					setState(49);
+					match(CORRIDAVEL);
+					setState(50);
+					match(DOISPONTOS);
+					setState(51);
+					((Def_atributosContext)_localctx).corrvel = match(NUM);
+					}
+					}
+					break;
+				case ESQUIVAVEL:
+					{
+					{
+					setState(52);
+					match(ESQUIVAVEL);
+					setState(53);
+					match(DOISPONTOS);
+					setState(54);
+					((Def_atributosContext)_localctx).esqvel = match(NUM);
+					}
+					}
+					break;
+				case ESQUIVADUR:
+					{
+					{
+					setState(55);
+					match(ESQUIVADUR);
+					setState(56);
+					match(DOISPONTOS);
+					setState(57);
+					((Def_atributosContext)_localctx).esqdur = match(NUM);
+					}
+					}
+					break;
+				case ESQUIVAESP:
+					{
+					{
+					setState(58);
+					match(ESQUIVAESP);
+					setState(59);
+					match(DOISPONTOS);
+					setState(60);
+					((Def_atributosContext)_localctx).esqesp = match(NUM);
+					}
+					}
+					break;
 				default:
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(53);
+				setState(65);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
 			{
-			setState(54);
+			setState(66);
 			match(VELOCIDADE);
-			setState(55);
+			setState(67);
 			match(DOISPONTOS);
-			setState(56);
+			setState(68);
 			((Def_atributosContext)_localctx).vel = match(NUM);
 			}
-			setState(72);
+			setState(96);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 67109760L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 63936L) != 0) {
 				{
-				setState(70);
+				setState(94);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case GRAVIDADE:
 					{
 					{
-					setState(58);
+					setState(70);
 					match(GRAVIDADE);
-					setState(59);
+					setState(71);
 					match(DOISPONTOS);
-					setState(60);
+					setState(72);
 					((Def_atributosContext)_localctx).grav = match(NUM);
 					}
 					}
@@ -339,11 +422,11 @@ public class MovUnityParser extends Parser {
 				case ACELERACAO:
 					{
 					{
-					setState(61);
+					setState(73);
 					match(ACELERACAO);
-					setState(62);
+					setState(74);
 					match(DOISPONTOS);
-					setState(63);
+					setState(75);
 					((Def_atributosContext)_localctx).ac = match(NUM);
 					}
 					}
@@ -351,11 +434,11 @@ public class MovUnityParser extends Parser {
 				case DESACELERACAO:
 					{
 					{
-					setState(64);
+					setState(76);
 					match(DESACELERACAO);
-					setState(65);
+					setState(77);
 					match(DOISPONTOS);
-					setState(66);
+					setState(78);
 					((Def_atributosContext)_localctx).desac = match(NUM);
 					}
 					}
@@ -363,12 +446,60 @@ public class MovUnityParser extends Parser {
 				case PULOIMPULSO:
 					{
 					{
-					setState(67);
+					setState(79);
 					match(PULOIMPULSO);
-					setState(68);
+					setState(80);
 					match(DOISPONTOS);
-					setState(69);
+					setState(81);
 					((Def_atributosContext)_localctx).puloIm = match(NUM);
+					}
+					}
+					break;
+				case CORRIDAVEL:
+					{
+					{
+					setState(82);
+					match(CORRIDAVEL);
+					setState(83);
+					match(DOISPONTOS);
+					setState(84);
+					((Def_atributosContext)_localctx).corrvel = match(NUM);
+					}
+					}
+					break;
+				case ESQUIVAVEL:
+					{
+					{
+					setState(85);
+					match(ESQUIVAVEL);
+					setState(86);
+					match(DOISPONTOS);
+					setState(87);
+					((Def_atributosContext)_localctx).esqvel = match(NUM);
+					}
+					}
+					break;
+				case ESQUIVADUR:
+					{
+					{
+					setState(88);
+					match(ESQUIVADUR);
+					setState(89);
+					match(DOISPONTOS);
+					setState(90);
+					((Def_atributosContext)_localctx).esqdur = match(NUM);
+					}
+					}
+					break;
+				case ESQUIVAESP:
+					{
+					{
+					setState(91);
+					match(ESQUIVAESP);
+					setState(92);
+					match(DOISPONTOS);
+					setState(93);
+					((Def_atributosContext)_localctx).esqesp = match(NUM);
 					}
 					}
 					break;
@@ -376,11 +507,11 @@ public class MovUnityParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(74);
+				setState(98);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(75);
+			setState(99);
 			controles();
 			}
 		}
@@ -430,22 +561,22 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(77);
+			setState(101);
 			match(CONTROLES);
-			setState(78);
+			setState(102);
 			match(DOISPONTOS);
-			setState(81);
+			setState(105);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TECLADO:
 				{
-				setState(79);
+				setState(103);
 				teclado();
 				}
 				break;
 			case MOUSE:
 				{
-				setState(80);
+				setState(104);
 				mouse();
 				}
 				break;
@@ -498,13 +629,13 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83);
+			setState(107);
 			match(TECLADO);
-			setState(84);
+			setState(108);
 			match(ABRECHAVE);
-			setState(85);
+			setState(109);
 			attr_teclado();
-			setState(86);
+			setState(110);
 			match(FECHACHAVE);
 			}
 		}
@@ -521,6 +652,9 @@ public class MovUnityParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Attr_tecladoContext extends ParserRuleContext {
+		public Botoes_tecladoContext pulo;
+		public Botoes_tecladoContext corrida;
+		public Botoes_tecladoContext esquiva;
 		public TerminalNode MODO() { return getToken(MovUnityParser.MODO, 0); }
 		public List<TerminalNode> DOISPONTOS() { return getTokens(MovUnityParser.DOISPONTOS); }
 		public TerminalNode DOISPONTOS(int i) {
@@ -529,13 +663,33 @@ public class MovUnityParser extends Parser {
 		public Modos_tecladoContext modos_teclado() {
 			return getRuleContext(Modos_tecladoContext.class,0);
 		}
-		public TerminalNode PULOCONTROLE() { return getToken(MovUnityParser.PULOCONTROLE, 0); }
-		public Botoes_tecladoContext botoes_teclado() {
-			return getRuleContext(Botoes_tecladoContext.class,0);
+		public List<TerminalNode> PULOCONTROLE() { return getTokens(MovUnityParser.PULOCONTROLE); }
+		public TerminalNode PULOCONTROLE(int i) {
+			return getToken(MovUnityParser.PULOCONTROLE, i);
 		}
-		public TerminalNode DIAGONAL() { return getToken(MovUnityParser.DIAGONAL, 0); }
-		public Parcela_logicaContext parcela_logica() {
-			return getRuleContext(Parcela_logicaContext.class,0);
+		public List<TerminalNode> DIAGONAL() { return getTokens(MovUnityParser.DIAGONAL); }
+		public TerminalNode DIAGONAL(int i) {
+			return getToken(MovUnityParser.DIAGONAL, i);
+		}
+		public List<Parcela_logicaContext> parcela_logica() {
+			return getRuleContexts(Parcela_logicaContext.class);
+		}
+		public Parcela_logicaContext parcela_logica(int i) {
+			return getRuleContext(Parcela_logicaContext.class,i);
+		}
+		public List<TerminalNode> CORRIDACON() { return getTokens(MovUnityParser.CORRIDACON); }
+		public TerminalNode CORRIDACON(int i) {
+			return getToken(MovUnityParser.CORRIDACON, i);
+		}
+		public List<TerminalNode> ESQUIVACON() { return getTokens(MovUnityParser.ESQUIVACON); }
+		public TerminalNode ESQUIVACON(int i) {
+			return getToken(MovUnityParser.ESQUIVACON, i);
+		}
+		public List<Botoes_tecladoContext> botoes_teclado() {
+			return getRuleContexts(Botoes_tecladoContext.class);
+		}
+		public Botoes_tecladoContext botoes_teclado(int i) {
+			return getRuleContext(Botoes_tecladoContext.class,i);
 		}
 		public Attr_tecladoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -563,40 +717,76 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(88);
+			setState(112);
 			match(MODO);
-			setState(89);
+			setState(113);
 			match(DOISPONTOS);
-			setState(90);
+			setState(114);
 			modos_teclado();
-			setState(94);
+			setState(129);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==PULOCONTROLE) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 15728640L) != 0) {
 				{
-				setState(91);
-				match(PULOCONTROLE);
-				setState(92);
-				match(DOISPONTOS);
-				setState(93);
-				botoes_teclado();
+				setState(127);
+				_errHandler.sync(this);
+				switch (_input.LA(1)) {
+				case PULOCONTROLE:
+					{
+					{
+					setState(115);
+					match(PULOCONTROLE);
+					setState(116);
+					match(DOISPONTOS);
+					setState(117);
+					((Attr_tecladoContext)_localctx).pulo = botoes_teclado();
+					}
+					}
+					break;
+				case DIAGONAL:
+					{
+					{
+					setState(118);
+					match(DIAGONAL);
+					setState(119);
+					match(DOISPONTOS);
+					setState(120);
+					parcela_logica();
+					}
+					}
+					break;
+				case CORRIDACON:
+					{
+					{
+					setState(121);
+					match(CORRIDACON);
+					setState(122);
+					match(DOISPONTOS);
+					setState(123);
+					((Attr_tecladoContext)_localctx).corrida = botoes_teclado();
+					}
+					}
+					break;
+				case ESQUIVACON:
+					{
+					{
+					setState(124);
+					match(ESQUIVACON);
+					setState(125);
+					match(DOISPONTOS);
+					setState(126);
+					((Attr_tecladoContext)_localctx).esquiva = botoes_teclado();
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
-			}
-
-			setState(99);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==DIAGONAL) {
-				{
-				setState(96);
-				match(DIAGONAL);
-				setState(97);
-				match(DOISPONTOS);
-				setState(98);
-				parcela_logica();
 				}
+				setState(131);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
 			}
-
 			}
 		}
 		catch (RecognitionException re) {
@@ -643,13 +833,13 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(101);
+			setState(132);
 			match(MOUSE);
-			setState(102);
+			setState(133);
 			match(ABRECHAVE);
-			setState(103);
+			setState(134);
 			attr_mouse();
-			setState(104);
+			setState(135);
 			match(FECHACHAVE);
 			}
 		}
@@ -704,22 +894,22 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(106);
+			setState(137);
 			match(MODO);
-			setState(107);
+			setState(138);
 			match(DOISPONTOS);
-			setState(108);
+			setState(139);
 			modos_mouse();
-			setState(112);
+			setState(143);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==BOTAO) {
 				{
-				setState(109);
+				setState(140);
 				match(BOTAO);
-				setState(110);
+				setState(141);
 				match(DOISPONTOS);
-				setState(111);
+				setState(142);
 				botoes_mouse();
 				}
 			}
@@ -767,7 +957,7 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(114);
+			setState(145);
 			_la = _input.LA(1);
 			if ( !(_la==SIDESCROLLING || _la==TOPDOWN) ) {
 			_errHandler.recoverInline(this);
@@ -820,7 +1010,7 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(116);
+			setState(147);
 			_la = _input.LA(1);
 			if ( !(_la==VERDADEIRO || _la==FALSO) ) {
 			_errHandler.recoverInline(this);
@@ -873,7 +1063,7 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(118);
+			setState(149);
 			_la = _input.LA(1);
 			if ( !(_la==WASD || _la==FLECHAS) ) {
 			_errHandler.recoverInline(this);
@@ -926,7 +1116,7 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(151);
 			_la = _input.LA(1);
 			if ( !(_la==CLIQUE || _la==SEGUIR) ) {
 			_errHandler.recoverInline(this);
@@ -979,7 +1169,7 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(122);
+			setState(153);
 			_la = _input.LA(1);
 			if ( !(_la==DIREITO || _la==ESQUERDO) ) {
 			_errHandler.recoverInline(this);
@@ -1004,9 +1194,8 @@ public class MovUnityParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Botoes_tecladoContext extends ParserRuleContext {
-		public TerminalNode W() { return getToken(MovUnityParser.W, 0); }
-		public TerminalNode ESPACO() { return getToken(MovUnityParser.ESPACO, 0); }
-		public TerminalNode FLECHA() { return getToken(MovUnityParser.FLECHA, 0); }
+		public TerminalNode LETRA() { return getToken(MovUnityParser.LETRA, 0); }
+		public TerminalNode TECLA() { return getToken(MovUnityParser.TECLA, 0); }
 		public Botoes_tecladoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1033,9 +1222,9 @@ public class MovUnityParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124);
+			setState(155);
 			_la = _input.LA(1);
-			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 29360128L) != 0) ) {
+			if ( !(_la==LETRA || _la==TECLA) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1057,7 +1246,7 @@ public class MovUnityParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\'\u007f\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001.\u009e\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
@@ -1065,69 +1254,91 @@ public class MovUnityParser extends Parser {
 		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0005\u00012\b\u0001\n\u0001\f\u00015\t\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0005\u0001G\b\u0001\n\u0001\f\u0001J\t\u0001"+
+		"\u0005\u0001>\b\u0001\n\u0001\f\u0001A\t\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0005\u0001_\b\u0001\n\u0001\f\u0001b\t\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002"+
-		"\u0003\u0002R\b\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003"+
+		"\u0003\u0002j\b\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003"+
 		"\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0003\u0004_\b\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0003\u0004d\b\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0003\u0006q\b\u0006\u0001\u0007\u0001\u0007\u0001\b\u0001"+
-		"\b\u0001\t\u0001\t\u0001\n\u0001\n\u0001\u000b\u0001\u000b\u0001\f\u0001"+
-		"\f\u0001\f\u0000\u0000\r\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012"+
-		"\u0014\u0016\u0018\u0000\u0006\u0001\u0000\u0003\u0004\u0001\u0000\u001c"+
-		"\u001d\u0001\u0000\u000f\u0010\u0001\u0000\u0011\u0012\u0001\u0000\u0014"+
-		"\u0015\u0001\u0000\u0016\u0018}\u0000\u001a\u0001\u0000\u0000\u0000\u0002"+
-		"3\u0001\u0000\u0000\u0000\u0004M\u0001\u0000\u0000\u0000\u0006S\u0001"+
-		"\u0000\u0000\u0000\bX\u0001\u0000\u0000\u0000\ne\u0001\u0000\u0000\u0000"+
-		"\fj\u0001\u0000\u0000\u0000\u000er\u0001\u0000\u0000\u0000\u0010t\u0001"+
-		"\u0000\u0000\u0000\u0012v\u0001\u0000\u0000\u0000\u0014x\u0001\u0000\u0000"+
-		"\u0000\u0016z\u0001\u0000\u0000\u0000\u0018|\u0001\u0000\u0000\u0000\u001a"+
-		"\u001b\u0005\u0002\u0000\u0000\u001b\u001c\u0005 \u0000\u0000\u001c\u001d"+
-		"\u0005\u001e\u0000\u0000\u001d\u001e\u0005\u0001\u0000\u0000\u001e\u001f"+
-		"\u0003\u000e\u0007\u0000\u001f \u0005!\u0000\u0000 !\u0005\"\u0000\u0000"+
-		"!\"\u0003\u0002\u0001\u0000\"#\u0005#\u0000\u0000#$\u0005\u0000\u0000"+
-		"\u0001$\u0001\u0001\u0000\u0000\u0000%&\u0005\u0007\u0000\u0000&\'\u0005"+
-		"\u001f\u0000\u0000\'2\u0005\u0006\u0000\u0000()\u0005\b\u0000\u0000)*"+
-		"\u0005\u001f\u0000\u0000*2\u0005\u0006\u0000\u0000+,\u0005\t\u0000\u0000"+
-		",-\u0005\u001f\u0000\u0000-2\u0005\u0006\u0000\u0000./\u0005\u001a\u0000"+
-		"\u0000/0\u0005\u001f\u0000\u000002\u0005\u0006\u0000\u00001%\u0001\u0000"+
-		"\u0000\u00001(\u0001\u0000\u0000\u00001+\u0001\u0000\u0000\u00001.\u0001"+
-		"\u0000\u0000\u000025\u0001\u0000\u0000\u000031\u0001\u0000\u0000\u0000"+
-		"34\u0001\u0000\u0000\u000046\u0001\u0000\u0000\u000053\u0001\u0000\u0000"+
-		"\u000067\u0005\u0005\u0000\u000078\u0005\u001f\u0000\u000089\u0005\u0006"+
-		"\u0000\u00009H\u0001\u0000\u0000\u0000:;\u0005\u0007\u0000\u0000;<\u0005"+
-		"\u001f\u0000\u0000<G\u0005\u0006\u0000\u0000=>\u0005\b\u0000\u0000>?\u0005"+
-		"\u001f\u0000\u0000?G\u0005\u0006\u0000\u0000@A\u0005\t\u0000\u0000AB\u0005"+
-		"\u001f\u0000\u0000BG\u0005\u0006\u0000\u0000CD\u0005\u001a\u0000\u0000"+
-		"DE\u0005\u001f\u0000\u0000EG\u0005\u0006\u0000\u0000F:\u0001\u0000\u0000"+
-		"\u0000F=\u0001\u0000\u0000\u0000F@\u0001\u0000\u0000\u0000FC\u0001\u0000"+
-		"\u0000\u0000GJ\u0001\u0000\u0000\u0000HF\u0001\u0000\u0000\u0000HI\u0001"+
-		"\u0000\u0000\u0000IK\u0001\u0000\u0000\u0000JH\u0001\u0000\u0000\u0000"+
-		"KL\u0003\u0004\u0002\u0000L\u0003\u0001\u0000\u0000\u0000MN\u0005\n\u0000"+
-		"\u0000NQ\u0005\u001f\u0000\u0000OR\u0003\u0006\u0003\u0000PR\u0003\n\u0005"+
-		"\u0000QO\u0001\u0000\u0000\u0000QP\u0001\u0000\u0000\u0000R\u0005\u0001"+
-		"\u0000\u0000\u0000ST\u0005\u000b\u0000\u0000TU\u0005\"\u0000\u0000UV\u0003"+
-		"\b\u0004\u0000VW\u0005#\u0000\u0000W\u0007\u0001\u0000\u0000\u0000XY\u0005"+
-		"\u000e\u0000\u0000YZ\u0005\u001f\u0000\u0000Z^\u0003\u0012\t\u0000[\\"+
-		"\u0005\u0019\u0000\u0000\\]\u0005\u001f\u0000\u0000]_\u0003\u0018\f\u0000"+
-		"^[\u0001\u0000\u0000\u0000^_\u0001\u0000\u0000\u0000_c\u0001\u0000\u0000"+
-		"\u0000`a\u0005\u001b\u0000\u0000ab\u0005\u001f\u0000\u0000bd\u0003\u0010"+
-		"\b\u0000c`\u0001\u0000\u0000\u0000cd\u0001\u0000\u0000\u0000d\t\u0001"+
-		"\u0000\u0000\u0000ef\u0005\f\u0000\u0000fg\u0005\"\u0000\u0000gh\u0003"+
-		"\f\u0006\u0000hi\u0005#\u0000\u0000i\u000b\u0001\u0000\u0000\u0000jk\u0005"+
-		"\u000e\u0000\u0000kl\u0005\u001f\u0000\u0000lp\u0003\u0014\n\u0000mn\u0005"+
-		"\u0013\u0000\u0000no\u0005\u001f\u0000\u0000oq\u0003\u0016\u000b\u0000"+
-		"pm\u0001\u0000\u0000\u0000pq\u0001\u0000\u0000\u0000q\r\u0001\u0000\u0000"+
-		"\u0000rs\u0007\u0000\u0000\u0000s\u000f\u0001\u0000\u0000\u0000tu\u0007"+
-		"\u0001\u0000\u0000u\u0011\u0001\u0000\u0000\u0000vw\u0007\u0002\u0000"+
-		"\u0000w\u0013\u0001\u0000\u0000\u0000xy\u0007\u0003\u0000\u0000y\u0015"+
-		"\u0001\u0000\u0000\u0000z{\u0007\u0004\u0000\u0000{\u0017\u0001\u0000"+
-		"\u0000\u0000|}\u0007\u0005\u0000\u0000}\u0019\u0001\u0000\u0000\u0000"+
-		"\b13FHQ^cp";
+		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
+		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0005\u0004\u0080\b\u0004"+
+		"\n\u0004\f\u0004\u0083\t\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001"+
+		"\u0005\u0001\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001"+
+		"\u0006\u0001\u0006\u0003\u0006\u0090\b\u0006\u0001\u0007\u0001\u0007\u0001"+
+		"\b\u0001\b\u0001\t\u0001\t\u0001\n\u0001\n\u0001\u000b\u0001\u000b\u0001"+
+		"\f\u0001\f\u0001\f\u0000\u0000\r\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010"+
+		"\u0012\u0014\u0016\u0018\u0000\u0007\u0002\u0000\u001e\u001e$$\u0001\u0000"+
+		"\u0004\u0005\u0001\u0000 !\u0001\u0000\u0018\u0019\u0001\u0000\u001a\u001b"+
+		"\u0001\u0000\u001c\u001d\u0002\u0000\u001e\u001e\"\"\u00a6\u0000\u001a"+
+		"\u0001\u0000\u0000\u0000\u0002?\u0001\u0000\u0000\u0000\u0004e\u0001\u0000"+
+		"\u0000\u0000\u0006k\u0001\u0000\u0000\u0000\bp\u0001\u0000\u0000\u0000"+
+		"\n\u0084\u0001\u0000\u0000\u0000\f\u0089\u0001\u0000\u0000\u0000\u000e"+
+		"\u0091\u0001\u0000\u0000\u0000\u0010\u0093\u0001\u0000\u0000\u0000\u0012"+
+		"\u0095\u0001\u0000\u0000\u0000\u0014\u0097\u0001\u0000\u0000\u0000\u0016"+
+		"\u0099\u0001\u0000\u0000\u0000\u0018\u009b\u0001\u0000\u0000\u0000\u001a"+
+		"\u001b\u0005\u0002\u0000\u0000\u001b\u001c\u0005&\u0000\u0000\u001c\u001d"+
+		"\u0007\u0000\u0000\u0000\u001d\u001e\u0005\u0001\u0000\u0000\u001e\u001f"+
+		"\u0003\u000e\u0007\u0000\u001f \u0005\'\u0000\u0000 !\u0005(\u0000\u0000"+
+		"!\"\u0003\u0002\u0001\u0000\"#\u0005)\u0000\u0000#$\u0005\u0000\u0000"+
+		"\u0001$\u0001\u0001\u0000\u0000\u0000%&\u0005\u0006\u0000\u0000&\'\u0005"+
+		"%\u0000\u0000\'>\u0005#\u0000\u0000()\u0005\u0007\u0000\u0000)*\u0005"+
+		"%\u0000\u0000*>\u0005#\u0000\u0000+,\u0005\b\u0000\u0000,-\u0005%\u0000"+
+		"\u0000->\u0005#\u0000\u0000./\u0005\u000b\u0000\u0000/0\u0005%\u0000\u0000"+
+		"0>\u0005#\u0000\u000012\u0005\f\u0000\u000023\u0005%\u0000\u00003>\u0005"+
+		"#\u0000\u000045\u0005\r\u0000\u000056\u0005%\u0000\u00006>\u0005#\u0000"+
+		"\u000078\u0005\u000e\u0000\u000089\u0005%\u0000\u00009>\u0005#\u0000\u0000"+
+		":;\u0005\u000f\u0000\u0000;<\u0005%\u0000\u0000<>\u0005#\u0000\u0000="+
+		"%\u0001\u0000\u0000\u0000=(\u0001\u0000\u0000\u0000=+\u0001\u0000\u0000"+
+		"\u0000=.\u0001\u0000\u0000\u0000=1\u0001\u0000\u0000\u0000=4\u0001\u0000"+
+		"\u0000\u0000=7\u0001\u0000\u0000\u0000=:\u0001\u0000\u0000\u0000>A\u0001"+
+		"\u0000\u0000\u0000?=\u0001\u0000\u0000\u0000?@\u0001\u0000\u0000\u0000"+
+		"@B\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000\u0000BC\u0005\t\u0000\u0000"+
+		"CD\u0005%\u0000\u0000DE\u0005#\u0000\u0000E`\u0001\u0000\u0000\u0000F"+
+		"G\u0005\u0006\u0000\u0000GH\u0005%\u0000\u0000H_\u0005#\u0000\u0000IJ"+
+		"\u0005\u0007\u0000\u0000JK\u0005%\u0000\u0000K_\u0005#\u0000\u0000LM\u0005"+
+		"\b\u0000\u0000MN\u0005%\u0000\u0000N_\u0005#\u0000\u0000OP\u0005\u000b"+
+		"\u0000\u0000PQ\u0005%\u0000\u0000Q_\u0005#\u0000\u0000RS\u0005\f\u0000"+
+		"\u0000ST\u0005%\u0000\u0000T_\u0005#\u0000\u0000UV\u0005\r\u0000\u0000"+
+		"VW\u0005%\u0000\u0000W_\u0005#\u0000\u0000XY\u0005\u000e\u0000\u0000Y"+
+		"Z\u0005%\u0000\u0000Z_\u0005#\u0000\u0000[\\\u0005\u000f\u0000\u0000\\"+
+		"]\u0005%\u0000\u0000]_\u0005#\u0000\u0000^F\u0001\u0000\u0000\u0000^I"+
+		"\u0001\u0000\u0000\u0000^L\u0001\u0000\u0000\u0000^O\u0001\u0000\u0000"+
+		"\u0000^R\u0001\u0000\u0000\u0000^U\u0001\u0000\u0000\u0000^X\u0001\u0000"+
+		"\u0000\u0000^[\u0001\u0000\u0000\u0000_b\u0001\u0000\u0000\u0000`^\u0001"+
+		"\u0000\u0000\u0000`a\u0001\u0000\u0000\u0000ac\u0001\u0000\u0000\u0000"+
+		"b`\u0001\u0000\u0000\u0000cd\u0003\u0004\u0002\u0000d\u0003\u0001\u0000"+
+		"\u0000\u0000ef\u0005\n\u0000\u0000fi\u0005%\u0000\u0000gj\u0003\u0006"+
+		"\u0003\u0000hj\u0003\n\u0005\u0000ig\u0001\u0000\u0000\u0000ih\u0001\u0000"+
+		"\u0000\u0000j\u0005\u0001\u0000\u0000\u0000kl\u0005\u0011\u0000\u0000"+
+		"lm\u0005(\u0000\u0000mn\u0003\b\u0004\u0000no\u0005)\u0000\u0000o\u0007"+
+		"\u0001\u0000\u0000\u0000pq\u0005\u0010\u0000\u0000qr\u0005%\u0000\u0000"+
+		"r\u0081\u0003\u0012\t\u0000st\u0005\u0014\u0000\u0000tu\u0005%\u0000\u0000"+
+		"u\u0080\u0003\u0018\f\u0000vw\u0005\u0015\u0000\u0000wx\u0005%\u0000\u0000"+
+		"x\u0080\u0003\u0010\b\u0000yz\u0005\u0016\u0000\u0000z{\u0005%\u0000\u0000"+
+		"{\u0080\u0003\u0018\f\u0000|}\u0005\u0017\u0000\u0000}~\u0005%\u0000\u0000"+
+		"~\u0080\u0003\u0018\f\u0000\u007fs\u0001\u0000\u0000\u0000\u007fv\u0001"+
+		"\u0000\u0000\u0000\u007fy\u0001\u0000\u0000\u0000\u007f|\u0001\u0000\u0000"+
+		"\u0000\u0080\u0083\u0001\u0000\u0000\u0000\u0081\u007f\u0001\u0000\u0000"+
+		"\u0000\u0081\u0082\u0001\u0000\u0000\u0000\u0082\t\u0001\u0000\u0000\u0000"+
+		"\u0083\u0081\u0001\u0000\u0000\u0000\u0084\u0085\u0005\u0012\u0000\u0000"+
+		"\u0085\u0086\u0005(\u0000\u0000\u0086\u0087\u0003\f\u0006\u0000\u0087"+
+		"\u0088\u0005)\u0000\u0000\u0088\u000b\u0001\u0000\u0000\u0000\u0089\u008a"+
+		"\u0005\u0010\u0000\u0000\u008a\u008b\u0005%\u0000\u0000\u008b\u008f\u0003"+
+		"\u0014\n\u0000\u008c\u008d\u0005\u0013\u0000\u0000\u008d\u008e\u0005%"+
+		"\u0000\u0000\u008e\u0090\u0003\u0016\u000b\u0000\u008f\u008c\u0001\u0000"+
+		"\u0000\u0000\u008f\u0090\u0001\u0000\u0000\u0000\u0090\r\u0001\u0000\u0000"+
+		"\u0000\u0091\u0092\u0007\u0001\u0000\u0000\u0092\u000f\u0001\u0000\u0000"+
+		"\u0000\u0093\u0094\u0007\u0002\u0000\u0000\u0094\u0011\u0001\u0000\u0000"+
+		"\u0000\u0095\u0096\u0007\u0003\u0000\u0000\u0096\u0013\u0001\u0000\u0000"+
+		"\u0000\u0097\u0098\u0007\u0004\u0000\u0000\u0098\u0015\u0001\u0000\u0000"+
+		"\u0000\u0099\u009a\u0007\u0005\u0000\u0000\u009a\u0017\u0001\u0000\u0000"+
+		"\u0000\u009b\u009c\u0007\u0006\u0000\u0000\u009c\u0019\u0001\u0000\u0000"+
+		"\u0000\b=?^`i\u007f\u0081\u008f";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -2,7 +2,6 @@ package br.ufscar.dc.compiladores.t6;
 
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.ConverterParaKeyCode;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesMouse;
-import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesTeclado;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosMouse;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosTeclado;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarParcelaLogica;
@@ -14,11 +13,11 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
     HashMap<String, String> tabela;
     StringBuilder saida;
     String template;
-    boolean existeAc, existeDesac;
+    boolean existeAc, existeDesac, existeCorr, existeEsq;
     
     public MovUnityGeradorScript() {
         saida = new StringBuilder();
-        existeAc = existeDesac = false;
+        existeAc = existeDesac = existeCorr = existeEsq = false;
     }
     
     @Override
@@ -44,10 +43,15 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             saida.append("    private int horizontal;\n");
         
         saida.append("    public float speed="+ctx.vel.getText()+"f;\n");
+        if(!ctx.CORRIDAVEL().isEmpty()){
+            saida.append("    public float runningSpeed="+ctx.corrvel.getText()+"f;\n");
+            saida.append("    private float defaultSpeed="+ctx.vel.getText()+"f;\n");
+            existeCorr = true;
+        }
         if(!ctx.GRAVIDADE().isEmpty())
-            saida.append("    public float gravity="+ctx.grav.getText()+"f;\n");
+            saida.append("    private float gravity="+ctx.grav.getText()+"f;\n");
         else
-            saida.append("    public float gravity=0;\n");  
+            saida.append("    private float gravity=0;\n");  
         
         if(!ctx.PULOIMPULSO().isEmpty())
             saida.append("    public float jump="+ctx.puloIm.getText()+"f;\n");
@@ -69,6 +73,14 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         }
         
+        if(!ctx.ESQUIVADUR().isEmpty()){
+            saida.append("    private float dashSpeed = "+ctx.esqvel.getText()+"f;\n");
+            saida.append("    private float dashDuration = "+ctx.esqdur.getText()+"f;\n");
+            saida.append("    private float dashCooldown = "+ctx.esqesp.getText()+"f;\n");
+            saida.append("    private bool canDash = true;\n");
+            saida.append("    private bool isDashing = false;\n");
+            existeEsq = true;
+        }
   
         
         saida.append("\n\n");
@@ -81,30 +93,33 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     "    }" 
         );
         saida.append("\n\n");
-        saida.append("void Update()\n" +
+        saida.append("     void Update()\n" +
                     "    {\n" +
                     "        Movement();\n"
                     );
-        saida.append("        Jump();\n" +
-                    "    }"
-                    );
-        
-        saida.append("\n\n");
+        if(template.equals("side-scrolling")) 
+            saida.append("        Jump();\n");
+        if(existeCorr)
+            saida.append("        Run();\n");
+        if(existeEsq)
+            saida.append("        Dash();\n");
+        saida.append( "    }\n\n");
         return super.visitDef_atributos(ctx); 
     }
 
     @Override
     public Object visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx) {
-        saida.append("void Movement()\n{\n");
-
+        saida.append("     void Movement()\n{\n");
+        if(existeEsq)
+            saida.append("        if(isDashing) return;\n");
         if(template.equals("top-down")){
             saida.append("        horizontal = 0;\n" +
                         "        vertical = 0;\n");
             
             String modo = verificarModosTeclado(ctx.modos_teclado());
             boolean diagonal;
-            if(ctx.DIAGONAL() != null)
-                diagonal = verificarParcelaLogica(ctx.parcela_logica()).equals("verdadeiro");
+            if(!ctx.DIAGONAL().isEmpty())
+                diagonal = verificarParcelaLogica(ctx.parcela_logica().get(0)).equals("verdadeiro");
             else
                 diagonal = true;
             
@@ -244,12 +259,45 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         saida.append("}\n");
         
         if(template.equals("side-scrolling")){
-            saida.append("     void Jump(){\n");
-            saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.botoes_teclado())+"))\n" +
+            saida.append("    void Jump(){\n");
+            saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.pulo)+"))\n" +
                             "        {\n" +
                             "            rb.velocity= new Vector2(rb.velocity.x, jump);\n" +
                             "        }\n");
-            saida.append("     }\n");
+            saida.append("    }\n");
+        }
+        
+        if(existeCorr){
+            saida.append("    void Run(){\n");
+            saida.append("        if (Input.GetKey("+ConverterParaKeyCode(ctx.corrida)+"))\n" +
+                            "        {\n" +
+                            "            speed = runningSpeed;\n" +
+                            "        }\n");
+            saida.append("        else\n" +
+                            "        {\n" +
+                            "            speed = defaultSpeed;\n" +
+                            "        }\n");
+            saida.append("    }\n");
+        }
+        
+        if(existeEsq){
+            saida.append("    void Dash(){\n");
+            saida.append("          if(Input.GetKeyDown("+ConverterParaKeyCode(ctx.esquiva)+") && canDash){\n");
+            saida.append("               StartCoroutine(Dashing());\n");
+            saida.append("        }\n");
+            saida.append("     }\n\n");
+            
+            saida.append("    private IEnumerator Dashing(){\n" +
+                        "        canDash = false;\n" +
+                        "        isDashing = true;\n" +
+                        "        rb.velocity = rb.velocity.normalized*dashSpeed;\n" +
+                        "\n" +
+                        "        yield return new WaitForSeconds(dashDuration);\n" +
+                        "        isDashing = false;\n" +
+                        "\n" +
+                        "        yield return new WaitForSeconds(dashCooldown);\n" +
+                        "        canDash = true;\n" +
+                        "    }");
         }
         
         saida.append("}");
@@ -262,21 +310,21 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         String modo = verificarModosMouse(ctx.modos_mouse());
         
-        if(modo.equals("clique")) 
-            saida.append("private Vector3 targetPosition;");
-        
-        saida.append("void Movement()\n{\n");
+        if(modo.equals("clique")){
+            saida.append("private Vector3 targetPosition;\n");
+            saida.append("private bool isMoving;\n");
+        }
+        saida.append("     void Movement()\n{\n");
         if(modo.equals("seguir"))
         {
             saida.append
-            ("Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
-"           Vector3 moveDirection = (mousePosition - transform.position).normalized;\n" +
-"           transform.position += moveDirection * speed * Time.deltaTime;\n"
+            ("        move = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
+            "        transform.position = Vector2.MoveTowards(transform.position, move, speed * Time.deltaTime);\n"
             );
         }
         else if(modo.equals("clique"))
         {
-            saida.append("if (Input.GetMouseButtonDown(");
+            saida.append("        if (Input.GetMouseButtonDown(");
          
             if(verificarBotoesMouse(ctx.botoes_mouse()).equals("esquerdo"))
             {
@@ -286,25 +334,24 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             {
                 saida.append("1");
             }
-            saida.append(")\n{\n");
+            saida.append("))\n{\n");
             saida.append
-            ("            targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
-            "            targetPosition.z = transform.position.z;\n" +
+            ("            move = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
             "            isMoving = true;\n" +
             "        }");
             
             saida.append("if (isMoving)\n" +
 "        {");
             saida.append
-            ("        Vector3 moveDirection = (targetPosition - transform.position).normalized; // Calcula a direção para a posição alvo\n" +
-            "        transform.position += moveDirection * speed * Time.deltaTime; // Move o objeto na direção da posição alvo\n" +
-            "        if (Vector3.Distance(transform.position, targetPosition) < 0.1f) // Verifica se chegou perto o suficiente da posição alvo\n" +
+            ("        transform.position = Vector2.MoveTowards(transform.position, move, speed * Time.deltaTime);\n" +
+            "        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)\n" +
             "        {\n" +
-            "            isMoving = false; // Para o movimento\n" +
-            "        }");
-            saida.append("}");
+            "            isMoving = false;\n" +
+            "        }\n");
+            saida.append("}\n");
         }   
         
+        saida.append("}\n");
         saida.append("}");
         return super.visitAttr_mouse(ctx);
     }

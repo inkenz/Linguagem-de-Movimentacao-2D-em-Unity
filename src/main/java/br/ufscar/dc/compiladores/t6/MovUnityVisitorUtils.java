@@ -6,9 +6,12 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 
 import br.ufscar.dc.compiladores.t6.MovUnityParser;
+import java.util.Arrays;
 
 public class MovUnityVisitorUtils {
     public static List<String> errosSemanticos = new ArrayList<>();
+    private static String[] strTeclas = {"SHIFTESQ", "ESPACO","TAB","ENTER","CTRLESQ"};
+    private static List<String> possiveisTeclas = Arrays.asList(strTeclas);
     
     public static void adicionarErroSemantico(Token t, String mensagem) 
     {
@@ -70,20 +73,6 @@ public class MovUnityVisitorUtils {
         return "";
     }
     
-    public static String verificarBotoesTeclado(MovUnityParser.Botoes_tecladoContext ctx)
-    {
-        if(ctx.ESPACO() != null){
-            return "espaco";
-        }
-        else if(ctx.FLECHA() != null){
-            return "flecha";
-        }
-        else if(ctx.W() != null){
-            return "W";
-        }
-        return "";
-    }
-    
     
     public static String verificarBotoesMouse(MovUnityParser.Botoes_mouseContext ctx)
     {
@@ -110,13 +99,37 @@ public class MovUnityVisitorUtils {
     
     public static String ConverterParaKeyCode(MovUnityParser.Botoes_tecladoContext ctx)
     {
-        String key = verificarBotoesTeclado(ctx);
+        
+        if(ctx.LETRA() != null)
+            return "KeyCode."+ctx.LETRA().getText();
+
+        String key = ctx.TECLA().getText();
         switch(key)
         {
-            case "espaco":
+            case "ESPACO":
                 return "KeyCode.Space";
+            case "SHIFTESQ":
+                return "KeyCode.LeftShift";
+            case "TAB":
+                return "KeyCode.Tab";
+            case "ENTER":
+                return "KeyCode.KeypadEnter";
+            case "CTRLESQ":
+                return "KeyCode.LeftControl";
+            case "ALTESQ":
+                return "KeyCode.LeftAlt";
+            case "ALTDIR":
+                return "KeyCode.RightAlt";
+            case "SHIFTDIR":
+                return "KeyCode.RightShift";
+            case "CTRLDIR":
+                return "KeyCode.RightControl";
+            case "ESC":
+                return "KeyCode.Escape";
             default:
                 return "ERRO";
         }
+
+       
     }
 }

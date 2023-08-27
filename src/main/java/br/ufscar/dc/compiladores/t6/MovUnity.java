@@ -39,7 +39,10 @@ public class MovUnity
                     pw.println("Linha "+t.getLine()+": comentario nao fechado");
                     lexError = true;
                     break;
-                } /*else {
+                } else if(nomeToken.equals("CHAVE_NAO_FECHADA")){
+                    pw.println("Linha "+t.getLine()+": chave nao fechada");
+                    lexError = true;
+                }/*else {
                     pw.println("<'" + t.getText() + "'," + nomeToken + ">");
                 } */
                

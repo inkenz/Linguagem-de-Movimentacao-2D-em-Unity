@@ -3,7 +3,6 @@ package br.ufscar.dc.compiladores.t6;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.adicionarErroSemantico;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.adicionarErro;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesMouse;
-import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesTeclado;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosMouse;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosTeclado;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarParcelaLogica;
@@ -13,10 +12,10 @@ import static br.ufscar.dc.compiladores.t6.TabelaDeValores.RetornarAtributoFalta
 import static br.ufscar.dc.compiladores.t6.TabelaDeValores.VerificarTabela;
 import static java.lang.Float.parseFloat;
 import java.util.HashMap;
+import java.util.List;
 
 public class MovUnitySemantico extends MovUnityBaseVisitor {
     HashMap<String, String> tabela;
-    
     
     @Override
     public Object visitGameobject(MovUnityParser.GameobjectContext ctx) {
@@ -67,6 +66,9 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             if(ctx.ACELERACAO().size() > 1){
                 adicionarErroSemantico(ctx.ACELERACAO().get(1).getSymbol(), "O atributo aceleracao já foi definido");
             }
+            else if(ctx.controles().CONTROLES().getText().equals("mouse")){
+                adicionarErroSemantico(ctx.ACELERACAO().get(1).getSymbol(), "O atributo aceleracao não funciona com esse tipo de controle");
+            }
             else{
                 String ac = ctx.ac.getText();
                 if(parseFloat(ac) < 0)
@@ -78,6 +80,9 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         if(!ctx.DESACELERACAO().isEmpty()){
             if(ctx.DESACELERACAO().size() > 1){
                 adicionarErroSemantico(ctx.DESACELERACAO().get(1).getSymbol(), "O atributo desaceleracao já foi definido");
+            }
+            else if(ctx.controles().CONTROLES().getText().equals("mouse")){
+                adicionarErroSemantico(ctx.DESACELERACAO().get(1).getSymbol(), "O atributo desaceleracao não funciona para esse tipo de controle");
             }
             else{
                 String desac = ctx.desac.getText();
@@ -92,14 +97,71 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
                 adicionarErroSemantico(ctx.PULOIMPULSO().get(1).getSymbol(), "O atributo puloImpulso já foi definido");
             }
             else if(tabela.get("template").equals("top-down")){
-                adicionarErroSemantico(ctx.GRAVIDADE().get(0).getSymbol(), "O template escolhido não possui o atributo puloImpulso");
+                adicionarErroSemantico(ctx.PULOIMPULSO().get(0).getSymbol(), "O template escolhido não possui o atributo puloImpulso");
             }else{
                 String puloIm = ctx.puloIm.getText();
                 if(parseFloat(puloIm) < 0)
-                    adicionarErroSemantico(ctx.DESACELERACAO().get(0).getSymbol(), "O atributo puloImpulso só pode assumir valores positivos");
+                    adicionarErroSemantico(ctx.PULOIMPULSO().get(0).getSymbol(), "O atributo puloImpulso só pode assumir valores positivos");
                 tabela.put("puloImpulso", puloIm);
             }
         }
+        
+        if(!ctx.CORRIDAVEL().isEmpty()){
+            if(ctx.CORRIDAVEL().size() > 1){
+                adicionarErroSemantico(ctx.CORRIDAVEL().get(1).getSymbol(), "O atributo corridaVelocidade já foi definido");
+            }
+            else{
+                String corrvel = ctx.corrvel.getText();
+                if(parseFloat(corrvel) < 0)
+                    adicionarErroSemantico(ctx.CORRIDAVEL().get(0).getSymbol(), "O atributo corridaVelocidade só pode assumir valores positivos");
+                tabela.put("corridaVelocidade", corrvel);
+                tabela.put("corridaControle", "");
+            }
+        }
+        
+        if(!ctx.ESQUIVAVEL().isEmpty() || !ctx.ESQUIVADUR().isEmpty() || !ctx.ESQUIVAESP().isEmpty()){
+            tabela.put("esquivaVelocidade", "");
+            tabela.put("esquivaDuracao", "");
+            tabela.put("esquivaEspera", "");
+            tabela.put("esquivaControle", "");
+        }
+        
+        if(!ctx.ESQUIVAVEL().isEmpty()){
+            if(ctx.ESQUIVAVEL().size() > 1){
+                adicionarErroSemantico(ctx.ESQUIVAVEL().get(1).getSymbol(), "O atributo esquivaVelocidade já foi definido");
+            }
+            else{
+                String esqvel = ctx.esqvel.getText();
+                if(parseFloat(esqvel) < 0)
+                    adicionarErroSemantico(ctx.ESQUIVAVEL().get(0).getSymbol(), "O atributo esquivaVelocidade só pode assumir valores positivos");
+                tabela.put("esquivaVelocidade", esqvel);
+            }
+        }
+        
+        if(!ctx.ESQUIVADUR().isEmpty()){
+            if(ctx.ESQUIVADUR().size() > 1){
+                adicionarErroSemantico(ctx.ESQUIVADUR().get(1).getSymbol(), "O atributo esquivaDuracao já foi definido");
+            }
+            else{
+                String esqdur = ctx.esqdur.getText();
+                if(parseFloat(esqdur) < 0)
+                    adicionarErroSemantico(ctx.ESQUIVADUR().get(0).getSymbol(), "O atributo esquivaDuracao só pode assumir valores positivos");
+                tabela.put("esquivaDuracao", esqdur);
+            }
+        }
+        
+        if(!ctx.ESQUIVAESP().isEmpty()){
+            if(ctx.ESQUIVAESP().size() > 1){
+                adicionarErroSemantico(ctx.ESQUIVAESP().get(1).getSymbol(), "O atributo esquivaEspera já foi definido");
+            }
+            else{
+                String esqesp = ctx.esqesp.getText();
+                if(parseFloat(esqesp) < 0)
+                    adicionarErroSemantico(ctx.ESQUIVAESP().get(0).getSymbol(), "O atributo esquivaEspera só pode assumir valores positivos");
+                tabela.put("esquivaEspera", esqesp);
+            }
+        }
+        
         return super.visitDef_atributos(ctx);
     }
 
@@ -130,13 +192,53 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         tabela.put("modo", verificarModosTeclado(ctx.modos_teclado()));
         
 
-        if(ctx.DIAGONAL() != null) 
-            tabela.put("diagonal", verificarParcelaLogica(ctx.parcela_logica()));
-        if(ctx.PULOCONTROLE() != null)
-            tabela.put("puloControle", verificarBotoesTeclado(ctx.botoes_teclado()));
+        if(!ctx.DIAGONAL().isEmpty()){
+            if(ctx.DIAGONAL().size() > 1){
+                adicionarErroSemantico(ctx.DIAGONAL().get(1).getSymbol(), "O atributo diagonal já foi definido");
+            }
+            else{
+                tabela.put("diagonal", ctx.parcela_logica().get(0).getText());
+            }
+        }
+            
+        if(!ctx.PULOCONTROLE().isEmpty()){
+            if(ctx.PULOCONTROLE().size() > 1){
+                adicionarErroSemantico(ctx.PULOCONTROLE().get(1).getSymbol(), "O atributo puloControle já foi definido");
+            }
+            else{
+                tabela.put("puloControle", ctx.pulo.getText());
+            }
+        }
+        
+        if(!ctx.CORRIDACON().isEmpty()){
+            if(ctx.CORRIDACON().size() > 1){
+                adicionarErroSemantico(ctx.CORRIDACON().get(1).getSymbol(), "O atributo corridaControle já foi definido");
+            }
+            else{
+                tabela.put("corridaControle", ctx.corrida.getText());
+                if(!tabela.containsKey("corridaVelocidade"))
+                    adicionarErroSemantico(ctx.getStart(),"Atribulo corridaVelocidade não declarado");
+            }
+        }
+        
+        if(!ctx.ESQUIVACON().isEmpty()){
+            if(ctx.ESQUIVACON().size() > 1){
+                adicionarErroSemantico(ctx.ESQUIVACON().get(1).getSymbol(), "O atributo esquivaControle já foi definido");
+            }
+            else{
+                tabela.put("esquivaControle", ctx.esquiva.getText());
+                if(!tabela.containsKey("esquivaVelocidade") && 
+                !tabela.containsKey("esquivaDuracao") && 
+                !tabela.containsKey("esquivaEspera")){
+                    adicionarErroSemantico(ctx.getStart(),"Atribulo esquivaVelocidade não declarado");
+                    adicionarErroSemantico(ctx.getStart(),"Atribulo esquivaDuracao não declarado");
+                    adicionarErroSemantico(ctx.getStart(),"Atribulo esquivaEspera não declarado");
+                }
+            }
+        }
         
         if(template.equals("side-scrolling") && tabela.containsKey("diagonal"))
-            adicionarErroSemantico(ctx.parcela_logica().getStart(),"Atribulo diagonal não pertence a este template");
+            adicionarErroSemantico(ctx.parcela_logica().get(0).getStart(),"Atribulo diagonal não pertence a este template");
                 
                
         
