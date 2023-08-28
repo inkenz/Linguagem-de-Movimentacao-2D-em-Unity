@@ -5,12 +5,10 @@ import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.adicionarErro;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarBotoesMouse;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosMouse;
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarModosTeclado;
-import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarParcelaLogica;
 
 import static br.ufscar.dc.compiladores.t6.MovUnityVisitorUtils.verificarTemplate;
 import static br.ufscar.dc.compiladores.t6.TabelaDeValores.RetornarAtributoFaltando;
 import static br.ufscar.dc.compiladores.t6.TabelaDeValores.VerificarTabela;
-import static java.lang.Float.parseFloat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,8 +38,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
     public Object visitDef_atributos(MovUnityParser.Def_atributosContext ctx) {
         // Velocidade é o único atributo obrigatório
         String vel = ctx.vel.getText();
-        if(parseFloat(vel) <= 0)
-            adicionarErroSemantico(ctx.VELOCIDADE().getSymbol(), "A velocidade só pode assumir valores positivos maiores que 0");
         tabela.put("velocidade", vel);
         
         // TESTES COM OS ATRIBUTOS NUMÉRICOS
@@ -55,8 +51,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String grav = ctx.grav.getText();
-                if(parseFloat(grav) < 0)
-                    adicionarErroSemantico(ctx.GRAVIDADE().get(0).getSymbol(), "O atributo gravidade só pode assumir valores positivos");
                 tabela.put("gravidade", grav);
             }
         }
@@ -71,8 +65,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String ac = ctx.ac.getText();
-                if(parseFloat(ac) < 0)
-                    adicionarErroSemantico(ctx.ACELERACAO().get(0).getSymbol(), "O atributo aceleracao só pode assumir valores positivos");
                 tabela.put("aceleracao", ac);
             }
         }
@@ -86,8 +78,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String desac = ctx.desac.getText();
-                if(parseFloat(desac) < 0)
-                    adicionarErroSemantico(ctx.DESACELERACAO().get(0).getSymbol(), "O atributo desaceleracao só pode assumir valores positivos");
                 tabela.put("desaceleracao", desac);
             }
         }
@@ -100,8 +90,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
                 adicionarErroSemantico(ctx.PULOIMPULSO().get(0).getSymbol(), "O template escolhido não possui o atributo puloImpulso");
             }else{
                 String puloIm = ctx.puloIm.getText();
-                if(parseFloat(puloIm) < 0)
-                    adicionarErroSemantico(ctx.PULOIMPULSO().get(0).getSymbol(), "O atributo puloImpulso só pode assumir valores positivos");
                 tabela.put("puloImpulso", puloIm);
             }
         }
@@ -112,8 +100,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String corrvel = ctx.corrvel.getText();
-                if(parseFloat(corrvel) < 0)
-                    adicionarErroSemantico(ctx.CORRIDAVEL().get(0).getSymbol(), "O atributo corridaVelocidade só pode assumir valores positivos");
                 tabela.put("corridaVelocidade", corrvel);
                 tabela.put("corridaControle", "");
             }
@@ -132,8 +118,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String esqvel = ctx.esqvel.getText();
-                if(parseFloat(esqvel) < 0)
-                    adicionarErroSemantico(ctx.ESQUIVAVEL().get(0).getSymbol(), "O atributo esquivaVelocidade só pode assumir valores positivos");
                 tabela.put("esquivaVelocidade", esqvel);
             }
         }
@@ -144,8 +128,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String esqdur = ctx.esqdur.getText();
-                if(parseFloat(esqdur) < 0)
-                    adicionarErroSemantico(ctx.ESQUIVADUR().get(0).getSymbol(), "O atributo esquivaDuracao só pode assumir valores positivos");
                 tabela.put("esquivaDuracao", esqdur);
             }
         }
@@ -156,8 +138,6 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             }
             else{
                 String esqesp = ctx.esqesp.getText();
-                if(parseFloat(esqesp) < 0)
-                    adicionarErroSemantico(ctx.ESQUIVAESP().get(0).getSymbol(), "O atributo esquivaEspera só pode assumir valores positivos");
                 tabela.put("esquivaEspera", esqesp);
             }
         }

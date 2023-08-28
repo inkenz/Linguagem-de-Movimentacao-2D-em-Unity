@@ -42,6 +42,9 @@ public class MovUnity
                 } else if(nomeToken.equals("CHAVE_NAO_FECHADA")){
                     pw.println("Linha "+t.getLine()+": chave nao fechada");
                     lexError = true;
+                } else if(nomeToken.equals("NEGATIVO")){
+                    pw.println("Linha "+t.getLine()+": valor negativo");
+                    lexError = true;
                 }/*else {
                     pw.println("<'" + t.getText() + "'," + nomeToken + ">");
                 } */

@@ -45,7 +45,7 @@ TECLA: 'SHIFTESQ' | 'ESPACO' | 'TAB' |
        'ENTER' | 'CTRLESQ' | 'ALTESQ' |
        'ALTDIR' | 'SHIFTDIR' | 'CTRLDIR' | 'ESC';
 // Valores gerais
-NUM: ('-')?('0'..'9')+ ('.' ('0'..'9')+)?;
+NUM: ('0'..'9')+ ('.' ('0'..'9')+)?;
 NOME: [a-zA-Z]([a-zA-Z0-9]* | [a-zA-Z0-9]*'_'[a-zA-Z0-9]* );
 
 // Outros
@@ -65,6 +65,7 @@ CHAVE_NAO_FECHADA:
 
 ERRO:
     ( '!' | '|' | '@' |'$' | '~' | ']' | '+');
+NEGATIVO: '-'NUM;
 IGNORE:
     ( ' ' | '\t' | '\r' | '\n' ) {skip();};
 
