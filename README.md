@@ -6,6 +6,7 @@ Trabalho 6 da Disciplina de Construção de Compiladores 2023/01 UFSCar, criado 
 ## Índice
 * [Descrição](#Descrição)
 * [Feito por](#Feito-por)
+* [Estrutura da Linguagem](#Estrutura-da-Linguagem)
 * [Compilação do Projeto](#Compilação-do-Projeto)
 * [Execução](#Execução)
 ## Descrição
@@ -19,6 +20,23 @@ O trabalho consiste em um compilador para a Linguagem de Movimentação 2D em Un
   + Julio Cesar dos Santos Oliveira Filho - 779800
 
 
+
+## Estrutura da Linguagem
+```
+GameObject([nome], [template]){
+    [atributos]
+    controle: [tipo de controle]{
+        [atributos do controle]
+    }
+}
+```
+| [] | Descrição |
+| ------------- | ------------- |
+| [nome]  | Nome da classe em C#, deve ser o mesmo nome que o arquivo para ser executado pelo motor Unity |
+| [template]  | Um de dois templates de movimentação implementados, TOP-DOWN ou SIDE-SCROLLING |
+| [atributos] | Atributos a serem definidos, dependem do template e do controle escolhidos |
+| [tipo de controle] | Existem dois tipos de controle possíveis de serem escritos que determinam como o GameObject vai se movimentar, 'mouse' ou 'teclado'|
+| [atributos do controle] | Atributos que determinam que botões do controle vão movimentar o GameObject |
 
 ## Compilação do Projeto
 
