@@ -18,21 +18,21 @@ public class MovUnityParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, GAMEOBJECT=2, TEMPLATE=3, SIDESCROLLING=4, TOPDOWN=5, GRAVIDADE=6, 
-		ACELERACAO=7, DESACELERACAO=8, VELOCIDADE=9, CONTROLES=10, PULOIMPULSO=11, 
+		ACELERACAO=7, DESACELERACAO=8, VELOCIDADE=9, CONTROLE=10, PULOIMPULSO=11, 
 		CORRIDAVEL=12, ESQUIVAVEL=13, ESQUIVADUR=14, ESQUIVAESP=15, MODO=16, TECLADO=17, 
 		MOUSE=18, BOTAO=19, PULOCONTROLE=20, DIAGONAL=21, CORRIDACON=22, ESQUIVACON=23, 
 		WASD=24, FLECHAS=25, CLIQUE=26, SEGUIR=27, DIREITO=28, ESQUERDO=29, LETRA=30, 
 		FLECHA=31, VERDADEIRO=32, FALSO=33, TECLA=34, NUM=35, NOME=36, DOISPONTOS=37, 
 		ABREPAR=38, FECHAPAR=39, ABRECHAVE=40, FECHACHAVE=41, COMENTARIO=42, COMENTARIO_NAO_FECHADO=43, 
-		CHAVE_NAO_FECHADA=44, ERRO=45, IGNORE=46;
+		CHAVE_NAO_FECHADA=44, ERRO=45, NEGATIVO=46, IGNORE=47;
 	public static final int
-		RULE_gameobject = 0, RULE_def_atributos = 1, RULE_controles = 2, RULE_teclado = 3, 
+		RULE_gameobject = 0, RULE_def_atributos = 1, RULE_controle = 2, RULE_teclado = 3, 
 		RULE_attr_teclado = 4, RULE_mouse = 5, RULE_attr_mouse = 6, RULE_templates = 7, 
 		RULE_parcela_logica = 8, RULE_modos_teclado = 9, RULE_modos_mouse = 10, 
 		RULE_botoes_mouse = 11, RULE_botoes_teclado = 12;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"gameobject", "def_atributos", "controles", "teclado", "attr_teclado", 
+			"gameobject", "def_atributos", "controle", "teclado", "attr_teclado", 
 			"mouse", "attr_mouse", "templates", "parcela_logica", "modos_teclado", 
 			"modos_mouse", "botoes_mouse", "botoes_teclado"
 		};
@@ -42,7 +42,7 @@ public class MovUnityParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "','", "'GameObject'", "'template'", "'SIDE-SCROLLING'", "'TOP-DOWN'", 
-			"'gravidade'", "'aceleracao'", "'desaceleracao'", "'velocidade'", "'controles'", 
+			"'gravidade'", "'aceleracao'", "'desaceleracao'", "'velocidade'", "'controle'", 
 			"'puloImpulso'", "'corridaVelocidade'", "'esquivaVelocidade'", "'esquivaDuracao'", 
 			"'esquivaEspera'", "'modo'", "'teclado'", "'mouse'", "'botao'", "'puloControle'", 
 			"'diagonal'", "'corridaControle'", "'esquivaControle'", "'WASD'", "'FLECHAS'", 
@@ -55,13 +55,13 @@ public class MovUnityParser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, "GAMEOBJECT", "TEMPLATE", "SIDESCROLLING", "TOPDOWN", "GRAVIDADE", 
-			"ACELERACAO", "DESACELERACAO", "VELOCIDADE", "CONTROLES", "PULOIMPULSO", 
+			"ACELERACAO", "DESACELERACAO", "VELOCIDADE", "CONTROLE", "PULOIMPULSO", 
 			"CORRIDAVEL", "ESQUIVAVEL", "ESQUIVADUR", "ESQUIVAESP", "MODO", "TECLADO", 
 			"MOUSE", "BOTAO", "PULOCONTROLE", "DIAGONAL", "CORRIDACON", "ESQUIVACON", 
 			"WASD", "FLECHAS", "CLIQUE", "SEGUIR", "DIREITO", "ESQUERDO", "LETRA", 
 			"FLECHA", "VERDADEIRO", "FALSO", "TECLA", "NUM", "NOME", "DOISPONTOS", 
 			"ABREPAR", "FECHAPAR", "ABRECHAVE", "FECHACHAVE", "COMENTARIO", "COMENTARIO_NAO_FECHADO", 
-			"CHAVE_NAO_FECHADA", "ERRO", "IGNORE"
+			"CHAVE_NAO_FECHADA", "ERRO", "NEGATIVO", "IGNORE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -209,8 +209,8 @@ public class MovUnityParser extends Parser {
 		public Token esqdur;
 		public Token esqesp;
 		public Token vel;
-		public ControlesContext controles() {
-			return getRuleContext(ControlesContext.class,0);
+		public ControleContext controle() {
+			return getRuleContext(ControleContext.class,0);
 		}
 		public TerminalNode VELOCIDADE() { return getToken(MovUnityParser.VELOCIDADE, 0); }
 		public List<TerminalNode> DOISPONTOS() { return getTokens(MovUnityParser.DOISPONTOS); }
@@ -512,7 +512,7 @@ public class MovUnityParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(99);
-			controles();
+			controle();
 			}
 		}
 		catch (RecognitionException re) {
@@ -527,8 +527,8 @@ public class MovUnityParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class ControlesContext extends ParserRuleContext {
-		public TerminalNode CONTROLES() { return getToken(MovUnityParser.CONTROLES, 0); }
+	public static class ControleContext extends ParserRuleContext {
+		public TerminalNode CONTROLE() { return getToken(MovUnityParser.CONTROLE, 0); }
 		public TerminalNode DOISPONTOS() { return getToken(MovUnityParser.DOISPONTOS, 0); }
 		public TecladoContext teclado() {
 			return getRuleContext(TecladoContext.class,0);
@@ -536,33 +536,33 @@ public class MovUnityParser extends Parser {
 		public MouseContext mouse() {
 			return getRuleContext(MouseContext.class,0);
 		}
-		public ControlesContext(ParserRuleContext parent, int invokingState) {
+		public ControleContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_controles; }
+		@Override public int getRuleIndex() { return RULE_controle; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MovUnityListener ) ((MovUnityListener)listener).enterControles(this);
+			if ( listener instanceof MovUnityListener ) ((MovUnityListener)listener).enterControle(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MovUnityListener ) ((MovUnityListener)listener).exitControles(this);
+			if ( listener instanceof MovUnityListener ) ((MovUnityListener)listener).exitControle(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MovUnityVisitor ) return ((MovUnityVisitor<? extends T>)visitor).visitControles(this);
+			if ( visitor instanceof MovUnityVisitor ) return ((MovUnityVisitor<? extends T>)visitor).visitControle(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ControlesContext controles() throws RecognitionException {
-		ControlesContext _localctx = new ControlesContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_controles);
+	public final ControleContext controle() throws RecognitionException {
+		ControleContext _localctx = new ControleContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_controle);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(101);
-			match(CONTROLES);
+			match(CONTROLE);
 			setState(102);
 			match(DOISPONTOS);
 			setState(105);
@@ -1246,7 +1246,7 @@ public class MovUnityParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001.\u009e\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001/\u009e\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+

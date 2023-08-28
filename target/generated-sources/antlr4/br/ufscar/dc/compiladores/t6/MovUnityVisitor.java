@@ -23,11 +23,11 @@ public interface MovUnityVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDef_atributos(MovUnityParser.Def_atributosContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#controles}.
+	 * Visit a parse tree produced by {@link MovUnityParser#controle}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitControles(MovUnityParser.ControlesContext ctx);
+	T visitControle(MovUnityParser.ControleContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MovUnityParser#teclado}.
 	 * @param ctx the parse tree

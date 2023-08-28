@@ -28,15 +28,15 @@ public interface MovUnityListener extends ParseTreeListener {
 	 */
 	void exitDef_atributos(MovUnityParser.Def_atributosContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#controles}.
+	 * Enter a parse tree produced by {@link MovUnityParser#controle}.
 	 * @param ctx the parse tree
 	 */
-	void enterControles(MovUnityParser.ControlesContext ctx);
+	void enterControle(MovUnityParser.ControleContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#controles}.
+	 * Exit a parse tree produced by {@link MovUnityParser#controle}.
 	 * @param ctx the parse tree
 	 */
-	void exitControles(MovUnityParser.ControlesContext ctx);
+	void exitControle(MovUnityParser.ControleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MovUnityParser#teclado}.
 	 * @param ctx the parse tree

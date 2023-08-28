@@ -12,7 +12,7 @@ GRAVIDADE: 'gravidade';
 ACELERACAO: 'aceleracao';
 DESACELERACAO: 'desaceleracao';
 VELOCIDADE: 'velocidade';
-CONTROLES: 'controles';
+CONTROLE: 'controle';
 PULOIMPULSO: 'puloImpulso';
 CORRIDAVEL: 'corridaVelocidade';
 ESQUIVAVEL: 'esquivaVelocidade';
@@ -95,11 +95,11 @@ def_atributos: ((GRAVIDADE DOISPONTOS grav=NUM) |
                 (ESQUIVADUR DOISPONTOS esqdur = NUM) |
                 (ESQUIVAESP DOISPONTOS esqesp=NUM)
                 )*
-               controles
+               controle
 ;
 
 //Controles
-controles: CONTROLES DOISPONTOS (teclado | mouse);
+controle: CONTROLE DOISPONTOS (teclado | mouse);
 teclado: TECLADO ABRECHAVE attr_teclado FECHACHAVE;
 attr_teclado: MODO DOISPONTOS modos_teclado 
             ((PULOCONTROLE DOISPONTOS pulo=botoes_teclado) |

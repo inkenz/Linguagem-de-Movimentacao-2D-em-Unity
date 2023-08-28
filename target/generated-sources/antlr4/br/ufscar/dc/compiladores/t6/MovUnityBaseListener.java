@@ -41,13 +41,13 @@ public class MovUnityBaseListener implements MovUnityListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterControles(MovUnityParser.ControlesContext ctx) { }
+	@Override public void enterControle(MovUnityParser.ControleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitControles(MovUnityParser.ControlesContext ctx) { }
+	@Override public void exitControle(MovUnityParser.ControleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

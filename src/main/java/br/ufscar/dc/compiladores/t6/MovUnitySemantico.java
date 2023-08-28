@@ -60,7 +60,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             if(ctx.ACELERACAO().size() > 1){
                 adicionarErroSemantico(ctx.ACELERACAO().get(1).getSymbol(), "O atributo aceleracao já foi definido");
             }
-            else if(ctx.controles().CONTROLES().getText().equals("mouse")){
+            else if(ctx.controle().CONTROLE().getText().equals("mouse")){
                 adicionarErroSemantico(ctx.ACELERACAO().get(1).getSymbol(), "O atributo aceleracao não funciona com esse tipo de controle");
             }
             else{
@@ -73,7 +73,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             if(ctx.DESACELERACAO().size() > 1){
                 adicionarErroSemantico(ctx.DESACELERACAO().get(1).getSymbol(), "O atributo desaceleracao já foi definido");
             }
-            else if(ctx.controles().CONTROLES().getText().equals("mouse")){
+            else if(ctx.controle().CONTROLE().getText().equals("mouse")){
                 adicionarErroSemantico(ctx.DESACELERACAO().get(1).getSymbol(), "O atributo desaceleracao não funciona para esse tipo de controle");
             }
             else{
