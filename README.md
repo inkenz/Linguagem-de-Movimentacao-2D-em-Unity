@@ -5,8 +5,8 @@ Trabalho 6 da Disciplina de Construção de Compiladores 2023/01 UFSCar, criado 
 
 ## Índice
 * [Descrição](#Descrição)
-* [Feito por](#Feito_por)
-* [Compilação do Projeto](#Compilação_do_Projeto)
+* [Feito por](#Feito-por)
+* [Compilação do Projeto](#Compilação-do-Projeto)
 * [Execução](#Execução)
 ## Descrição
 Vídeo: [inserir link]
