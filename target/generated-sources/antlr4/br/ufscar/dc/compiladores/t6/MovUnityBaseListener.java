@@ -77,6 +77,42 @@ public class MovUnityBaseListener implements MovUnityListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterOptions_teclado(MovUnityParser.Options_tecladoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOptions_teclado(MovUnityParser.Options_tecladoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCustom(MovUnityParser.CustomContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCustom(MovUnityParser.CustomContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTeclas_custom(MovUnityParser.Teclas_customContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTeclas_custom(MovUnityParser.Teclas_customContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMouse(MovUnityParser.MouseContext ctx) { }
 	/**
 	 * {@inheritDoc}

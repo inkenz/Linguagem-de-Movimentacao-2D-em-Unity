@@ -45,6 +45,9 @@ public class MovUnityVisitorUtils {
         else if(ctx.FLECHAS() != null){
             return "flechas";
         }
+        else if(ctx.custom() != null){
+            return "custom";
+        }
         
         return "";
     }

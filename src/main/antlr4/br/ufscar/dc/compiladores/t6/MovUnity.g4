@@ -32,11 +32,16 @@ ESQUIVACON: 'esquivaControle';
 
 // Valores de controle
 WASD: 'WASD';
+CUSTOM: 'CUSTOM';
 FLECHAS: 'FLECHAS';
 CLIQUE: 'CLIQUE';
 SEGUIR: 'SEGUIR';
 DIREITO: 'DIREITO';
 ESQUERDO: 'ESQUERDO';
+ESQUERDA: 'esquerda';
+DIREITA: 'direita';
+CIMA: 'cima';
+BAIXO: 'baixo';
 LETRA: [A-Z];
 FLECHA: 'FLECHA';
 VERDADEIRO: 'VERDADEIRO';
@@ -101,13 +106,19 @@ def_atributos: ((GRAVIDADE DOISPONTOS grav=NUM) |
 //Controles
 controle: CONTROLE DOISPONTOS (teclado | mouse);
 teclado: TECLADO ABRECHAVE attr_teclado FECHACHAVE;
-attr_teclado: MODO DOISPONTOS modos_teclado 
-            ((PULOCONTROLE DOISPONTOS pulo=botoes_teclado) |
+attr_teclado: MODO DOISPONTOS modos_teclado options_teclado;
+
+options_teclado: ((PULOCONTROLE DOISPONTOS pulo=botoes_teclado) |
             (DIAGONAL DOISPONTOS parcela_logica) |
             (CORRIDACON DOISPONTOS corrida=botoes_teclado) |
             (ESQUIVACON DOISPONTOS esquiva=botoes_teclado)
-            )*
-;
+            )*;
+custom: CUSTOM ABRECHAVE teclas_custom FECHACHAVE;
+teclas_custom: ESQUERDA DOISPONTOS esquerda=LETRA
+                DIREITA DOISPONTOS direita=LETRA
+                (CIMA DOISPONTOS cima=LETRA
+                BAIXO DOISPONTOS baixo=LETRA)?;
+
 mouse: MOUSE ABRECHAVE attr_mouse FECHACHAVE;
 attr_mouse: MODO DOISPONTOS modos_mouse (BOTAO DOISPONTOS botoes_mouse)?;
 
@@ -116,7 +127,7 @@ templates: SIDESCROLLING | TOPDOWN;
 parcela_logica:
     VERDADEIRO | FALSO
 ;
-modos_teclado: WASD | FLECHAS;
+modos_teclado: WASD | FLECHAS | custom;
 modos_mouse: CLIQUE | SEGUIR;
 botoes_mouse: DIREITO | ESQUERDO;
 botoes_teclado: LETRA | TECLA; 

@@ -10,6 +10,13 @@ public class TabelaDeValores {
         tabela.put("nome", null);
         tabela.put("velocidade", null);
         tabela.put("modo", null);
+        tabela.put("esquivaControle", null);
+        tabela.put("corridaControle", null);
+        tabela.put("puloControle", null);
+        tabela.put("cima", null);
+        tabela.put("baixo", null);
+        tabela.put("esquerda", null);
+        tabela.put("direita", null);
         tabela.put("diagonal", "verdadeiro");
         
         
@@ -23,6 +30,8 @@ public class TabelaDeValores {
         tabela.put("velocidade", null);
         tabela.put("gravidade", null);
         tabela.put("modo", null);
+        tabela.put("esquerda", null);
+        tabela.put("direita", null);
         tabela.put("puloControle", null);
         tabela.put("puloImpulso", null);
         
@@ -48,5 +57,32 @@ public class TabelaDeValores {
             }
         }
         return null; 
+    }
+
+    public static boolean letraJaUsada(HashMap<String, String> tabela, String letra){
+        if(tabela.get("puloControle") != null && tabela.get("puloControle").equals(letra)){
+            return true;
+        }
+        if(tabela.get("esquivaControle") != null && tabela.get("esquivaControle").equals(letra)){
+            return true;
+        }
+        if(tabela.get("corridaControle") != null && tabela.get("corridaControle").equals(letra)){
+            return true;
+        }
+        if(tabela.get("cima") != null && tabela.get("cima") != null && tabela.get("cima").equals(letra)){
+            return true;
+        }
+        if(tabela.get("baixo") != null && tabela.get("baixo").equals(letra)){
+            return true;
+        }
+        if(tabela.get("esquerda") != null && tabela.get("esquerda").equals(letra)){
+            return true;
+        }
+        if(tabela.get("direita") != null && tabela.get("direita").equals(letra)){
+            return true;
+        }
+        
+
+        return false;
     }
 }
