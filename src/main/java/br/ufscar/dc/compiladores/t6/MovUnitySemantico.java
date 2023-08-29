@@ -37,8 +37,12 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
     @Override
     public Object visitDef_atributos(MovUnityParser.Def_atributosContext ctx) {
         // Velocidade é o único atributo obrigatório
-        String vel = ctx.vel.getText();
-        tabela.put("velocidade", vel);
+        if(ctx.vel != null){
+            String vel = ctx.vel.getText();
+            tabela.put("velocidade", vel);
+        }
+        else
+            adicionarErroSemantico(ctx.start, "O atributo velocidade é obrigatório");
         
         // TESTES COM OS ATRIBUTOS NUMÉRICOS
         
