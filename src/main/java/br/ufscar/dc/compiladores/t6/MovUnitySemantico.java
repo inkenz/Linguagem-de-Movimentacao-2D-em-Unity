@@ -37,8 +37,12 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
     @Override
     public Object visitDef_atributos(MovUnityParser.Def_atributosContext ctx) {
         // Velocidade é o único atributo obrigatório
-        String vel = ctx.vel.getText();
-        tabela.put("velocidade", vel);
+        if(ctx.vel != null){
+            String vel = ctx.vel.getText();
+            tabela.put("velocidade", vel);
+        }
+        else
+            adicionarErroSemantico(ctx.start, "O atributo velocidade é obrigatório");
         
         // TESTES COM OS ATRIBUTOS NUMÉRICOS
         
@@ -173,16 +177,81 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         return super.visitAttr_mouse(ctx); 
     }
     
-    
-
-    
- 
     @Override
-    public Object visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx) {
+    public Object visitTeclas_custom(MovUnityParser.Teclas_customContext ctx){
         String template = tabela.get("template");
-        tabela.put("modo", verificarModosTeclado(ctx.modos_teclado()));
         
+        if(template.equals("side-scrolling") && (ctx.CIMA() != null || ctx.BAIXO() != null)){
+            adicionarErroSemantico(ctx.start, "Atributo cima e baixo não pertence ao template side-scrolling");
+        }
 
+        if(ctx.ESQUERDA() != null){
+            if(TabelaDeValores.letraJaUsada(tabela, ctx.esquerda.getText()))
+                adicionarErroSemantico(ctx.ESQUERDA().getSymbol(), "Atributo esquerda usa letra já declarada");
+            tabela.put("esquerda", ctx.esquerda.getText());
+        }
+        else
+            adicionarErroSemantico(ctx.start, "Atributo esquerda não declarado");
+
+        if(ctx.DIREITA() != null){
+            if(TabelaDeValores.letraJaUsada(tabela, ctx.direita.getText()))
+                adicionarErroSemantico(ctx.DIREITA().getSymbol(), "Atributo direita usa letra já declarada");
+            tabela.put("direita", ctx.direita.getText());
+        }
+        else
+            adicionarErroSemantico(ctx.start, "Atributo direita não declarado");
+
+        if(template.equals("top-down")){
+            if(ctx.CIMA() != null){
+                if(TabelaDeValores.letraJaUsada(tabela, ctx.cima.getText()))
+                    adicionarErroSemantico(ctx.CIMA().getSymbol(), "Atributo cima usa letra já declarada");
+                tabela.put("cima", ctx.cima.getText());
+            }
+            else
+                adicionarErroSemantico(ctx.start, "Atributo cima não declarado");  
+            if(ctx.BAIXO() != null){
+                if(TabelaDeValores.letraJaUsada(tabela, ctx.baixo.getText()))
+                    adicionarErroSemantico(ctx.BAIXO().getSymbol(), "Atributo baixo usa letra já declarada");
+                tabela.put("baixo", ctx.baixo.getText());
+            }
+            else {
+                adicionarErroSemantico(ctx.start, "Atributo baixo não declarado");
+            }
+        }
+     
+        return super.visitTeclas_custom(ctx);
+    }
+    @Override
+    public Object visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx) {        
+        tabela.put("modo", verificarModosTeclado(ctx.modos_teclado()));
+
+        return super.visitAttr_teclado(ctx);
+    }
+
+    public Object visitModos_teclado(MovUnityParser.Modos_tecladoContext ctx){
+        String template = tabela.get("template");
+        if(ctx.WASD() != null){
+            tabela.put("esquerda", "A");
+            tabela.put("direita", "D");
+            if(template.equals("top-down")){
+                tabela.put("cima", "W");
+                tabela.put("baixo", "S");
+            }
+        }
+        else if(ctx.FLECHAS() != null){
+            tabela.put("esquerda", "seta_esquerda");
+            tabela.put("direita", "seta_direita");
+            if(template.equals("top-down")){
+                tabela.put("cima", "seta_cima");
+                tabela.put("baixo", "seta_baixo");
+            }
+        }
+
+        return super.visitModos_teclado(ctx);
+    }
+
+    public Object visitOptions_teclado(MovUnityParser.Options_tecladoContext ctx){
+        String template = tabela.get("template");
         if(!ctx.DIAGONAL().isEmpty()){
             if(ctx.DIAGONAL().size() > 1){
                 adicionarErroSemantico(ctx.DIAGONAL().get(1).getSymbol(), "O atributo diagonal já foi definido");
@@ -197,6 +266,8 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
                 adicionarErroSemantico(ctx.PULOCONTROLE().get(1).getSymbol(), "O atributo puloControle já foi definido");
             }
             else{
+                if(TabelaDeValores.letraJaUsada(tabela, ctx.pulo.getText()))
+                    adicionarErroSemantico(ctx.PULOCONTROLE().get(0).getSymbol(), "O atributo puloControle usa letra ja declarada");
                 tabela.put("puloControle", ctx.pulo.getText());
             }
         }
@@ -206,9 +277,11 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
                 adicionarErroSemantico(ctx.CORRIDACON().get(1).getSymbol(), "O atributo corridaControle já foi definido");
             }
             else{
+                if(TabelaDeValores.letraJaUsada(tabela, ctx.corrida.getText()))
+                    adicionarErroSemantico(ctx.CORRIDACON().get(0).getSymbol(), "O atributo corridaControle usa letra ja declarada");
                 tabela.put("corridaControle", ctx.corrida.getText());
                 if(!tabela.containsKey("corridaVelocidade"))
-                    adicionarErroSemantico(ctx.getStart(),"Atribulo corridaVelocidade não declarado");
+                    adicionarErroSemantico(ctx.getStart(),"Atributo corridaVelocidade não declarado");
             }
         }
         
@@ -217,31 +290,28 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
                 adicionarErroSemantico(ctx.ESQUIVACON().get(1).getSymbol(), "O atributo esquivaControle já foi definido");
             }
             else{
+                if(TabelaDeValores.letraJaUsada(tabela, ctx.esquiva.getText()))
+                    adicionarErroSemantico(ctx.ESQUIVACON().get(0).getSymbol(), "O atributo esquivaControle usa letra ja declarada");
                 tabela.put("esquivaControle", ctx.esquiva.getText());
                 if(!tabela.containsKey("esquivaVelocidade") && 
                 !tabela.containsKey("esquivaDuracao") && 
                 !tabela.containsKey("esquivaEspera")){
-                    adicionarErroSemantico(ctx.getStart(),"Atribulo esquivaVelocidade não declarado");
-                    adicionarErroSemantico(ctx.getStart(),"Atribulo esquivaDuracao não declarado");
-                    adicionarErroSemantico(ctx.getStart(),"Atribulo esquivaEspera não declarado");
+                    adicionarErroSemantico(ctx.getStart(),"Atributo esquivaVelocidade não declarado");
+                    adicionarErroSemantico(ctx.getStart(),"Atributo esquivaDuracao não declarado");
+                    adicionarErroSemantico(ctx.getStart(),"Atributo esquivaEspera não declarado");
                 }
             }
         }
         
         if(template.equals("side-scrolling") && tabela.containsKey("diagonal"))
-            adicionarErroSemantico(ctx.parcela_logica().get(0).getStart(),"Atribulo diagonal não pertence a este template");
-                
-               
-        
-        
+            adicionarErroSemantico(ctx.parcela_logica().get(0).getStart(),"Atributo diagonal não pertence a este template");
+
         if(!VerificarTabela(tabela)){
-            adicionarErroSemantico(ctx.getStart(),"Atribulo "+RetornarAtributoFaltando(tabela)+" não declarado");
+            adicionarErroSemantico(ctx.getStart(),"Atributo "+RetornarAtributoFaltando(tabela)+" não declarado");
         }
-        
-        return super.visitAttr_teclado(ctx);
+
+        return super.visitOptions_teclado(ctx);
     }
-
-
    
     
 }

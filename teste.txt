@@ -1,0 +1,18 @@
+GameObject(nome1, SIDE-SCROLLING){
+    velocidade: 1
+    corridaVelocidade: 1
+    esquivaVelocidade: 1
+    esquivaDuracao: 1
+    esquivaEspera: 1
+    gravidade:1
+    puloImpulso:1
+    controle: teclado{
+        modo: CUSTOM{
+            esquerda:B
+            direita:C
+        }
+        puloControle: A
+        corridaControle: F
+        esquivaControle: L
+    }
+}

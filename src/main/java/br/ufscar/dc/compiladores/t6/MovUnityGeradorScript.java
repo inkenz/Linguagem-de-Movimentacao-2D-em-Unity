@@ -118,8 +118,8 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             
             String modo = verificarModosTeclado(ctx.modos_teclado());
             boolean diagonal;
-            if(!ctx.DIAGONAL().isEmpty())
-                diagonal = verificarParcelaLogica(ctx.parcela_logica().get(0)).equals("verdadeiro");
+            if(!ctx.options_teclado().DIAGONAL().isEmpty())
+                diagonal = verificarParcelaLogica(ctx.options_teclado().parcela_logica().get(0)).equals("verdadeiro");
             else
                 diagonal = true;
             
@@ -260,7 +260,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         if(template.equals("side-scrolling")){
             saida.append("    void Jump(){\n");
-            saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.pulo)+"))\n" +
+            saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.options_teclado().pulo)+"))\n" +
                             "        {\n" +
                             "            rb.velocity= new Vector2(rb.velocity.x, jump);\n" +
                             "        }\n");
@@ -269,7 +269,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         if(existeCorr){
             saida.append("    void Run(){\n");
-            saida.append("        if (Input.GetKey("+ConverterParaKeyCode(ctx.corrida)+"))\n" +
+            saida.append("        if (Input.GetKey("+ConverterParaKeyCode(ctx.options_teclado().corrida)+"))\n" +
                             "        {\n" +
                             "            speed = runningSpeed;\n" +
                             "        }\n");
@@ -282,7 +282,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         if(existeEsq){
             saida.append("    void Dash(){\n");
-            saida.append("          if(Input.GetKeyDown("+ConverterParaKeyCode(ctx.esquiva)+") && canDash){\n");
+            saida.append("          if(Input.GetKeyDown("+ConverterParaKeyCode(ctx.options_teclado().esquiva)+") && canDash){\n");
             saida.append("               StartCoroutine(Dashing());\n");
             saida.append("        }\n");
             saida.append("     }\n\n");

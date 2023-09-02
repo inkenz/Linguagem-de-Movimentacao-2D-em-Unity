@@ -1,0 +1,75 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class nome1: MonoBehaviour
+{
+    private Rigidbody2D rb;
+    private int horizontal;
+    public float speed=1f;
+    public float runningSpeed=1f;
+    private float defaultSpeed=1f;
+    private float gravity=1f;
+    public float jump=1f;
+    private float dashSpeed = 1f;
+    private float dashDuration = 1f;
+    private float dashCooldown = 1f;
+    private bool canDash = true;
+    private bool isDashing = false;
+
+
+    void Start()
+    {
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        if(rb == null) rb = gameObject.AddComponent(typeof(Rigidbody2D)) as Rigidbody2D;
+
+        rb.gravityScale =gravity;
+    }
+
+     void Update()
+    {
+        Movement();
+        Jump();
+        Run();
+        Dash();
+    }
+
+     void Movement()
+{
+        if(isDashing) return;
+        horizontal = 0;
+rb.velocity = new Vector2( horizontal*speed, rb.velocity.y);
+}
+    void Jump(){
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            rb.velocity= new Vector2(rb.velocity.x, jump);
+        }
+    }
+    void Run(){
+        if (Input.GetKey(KeyCode.F))
+        {
+            speed = runningSpeed;
+        }
+        else
+        {
+            speed = defaultSpeed;
+        }
+    }
+    void Dash(){
+          if(Input.GetKeyDown(KeyCode.L) && canDash){
+               StartCoroutine(Dashing());
+        }
+     }
+
+    private IEnumerator Dashing(){
+        canDash = false;
+        isDashing = true;
+        rb.velocity = rb.velocity.normalized*dashSpeed;
+
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }}
