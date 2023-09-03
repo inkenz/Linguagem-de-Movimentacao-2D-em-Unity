@@ -38,6 +38,7 @@ GameObject([nome], [template]){
 
 ### Lista de [atributos]
 | Nome | Descrição |
+| ------------- | ------------- |
 |velocidade| Se refere a velocidade com que o personagem vai se mover, único atributo que sempre vai ser declarado, independente de [template] ou [tipo_de_controle] |
 |gravidade| Valor da força da gravidade que vai agir sobre o personagem, deve apenas ser declarada quando o [template] for SIDE-SCROLLING|
 |aceleracao| Valor de aceleração do personagem, para o [tipo_de_controle] teclado apenas |
@@ -49,6 +50,7 @@ GameObject([nome], [template]){
 
 ### Lista de [atributos do controle]
 |Nome|Descrição| [tipo_de_controle]|
+| ------------- | ------------- | ------------- |
 |modo|Primeiro atributo a ser declarado dentro de [tipo_de_controle] |todos|
 |puloControle| Tecla utilizada para pular, é obrigatório apenas se o template declarado for SIDE-SCROLLING, caso o contrário, resultará em erro|teclado|
 |diagonal| Pode receber os valores VERDADEIRO ou FALSO, funciona apenas no [template] TOP-DOWN e determina se o personagem pode se movimentar na diagonal, não é obrigatório e o valor padrão é VERDADEIRO|teclado|
@@ -64,7 +66,9 @@ GameObject([nome], [template]){
 |CLIQUE|O personagem se movimenta para o local onde foi clicado, deve-se declarar o atributo botao e determinar se o clique deve ser feito com o botao DIREITO ou ESQUERDO| mouse|
 
 ### Lista de teclas para [tipo_do_controle] teclado
+
 |Nome|Descrição|
+| ------------- | ------------- |
 |ESPACO| Tecla espaço|
 |SHIFTESQ| Shift esquerdo|
 |SHIFTDIR|Shift direito|
