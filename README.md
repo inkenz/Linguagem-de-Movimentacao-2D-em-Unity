@@ -37,6 +37,7 @@ GameObject([nome], [template]){
 | [atributos_do_controle] | Atributos que determinam que botões do controle vão movimentar o GameObject |
 
 ### Lista de [atributos]
+
 | Nome | Descrição |
 | ------------- | ------------- |
 |velocidade| Se refere a velocidade com que o personagem vai se mover, único atributo que sempre vai ser declarado, independente de [template] ou [tipo_de_controle] |
@@ -49,6 +50,7 @@ GameObject([nome], [template]){
 |esquivaEspera| Valor do tempo, em segundos, que o personagem vai precisar esperar antes de usar a esquiva novamente|
 
 ### Lista de [atributos do controle]
+
 |Nome|Descrição| [tipo_de_controle]|
 | ------------- | ------------- | ------------- |
 |modo|Primeiro atributo a ser declarado dentro de [tipo_de_controle] |todos|
@@ -57,8 +59,11 @@ GameObject([nome], [template]){
 |corridaControle| Tecla utilizada para correr |teclado|
 |esquivaControle| Tecla utilizada para esquivar|teclado|
 |botao| Determina o botão do  mouse utilizada para o personagem se movimentar|mouse|
+
 ### Lista de valores para o [atributos do controle] modo
+
 |Nome|Descrição| [tipo_de_controle]|
+| ------------- | ------------- | ------------- |
 |WASD|O personagem se movimenta utilizando as teclas WASD|teclado|
 |FLECHAS|O personagem se movimenta utilizando as flechas do teclado|teclado|
 |custom|Deve-se abrir e fechar chaves depois e declarar os valores de esquerda, direita, cima e baixo, atribuindo uma tecla para cada um |teclado|
