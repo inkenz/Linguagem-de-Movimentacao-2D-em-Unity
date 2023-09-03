@@ -5,14 +5,12 @@ import java.util.HashMap;
 
 public class TabelaDeValores {
     public static HashMap<String, String> TemplateTopDown(){
+        //Valores que precisam ter caso escolha o template TOP-DOWN
         HashMap<String, String> tabela = new HashMap<>();
         tabela.put("template", "top-down");
         tabela.put("nome", null);
         tabela.put("velocidade", null);
         tabela.put("modo", null);
-        tabela.put("esquivaControle", null);
-        tabela.put("corridaControle", null);
-        tabela.put("puloControle", null);
         tabela.put("cima", null);
         tabela.put("baixo", null);
         tabela.put("esquerda", null);
@@ -24,6 +22,7 @@ public class TabelaDeValores {
     }
     
     public static HashMap<String, String> TemplateSideScrolling(){
+        //Valores que precisam ter caso escolha o template SIDE-SCROLLING
         HashMap<String, String> tabela = new HashMap<>();
         tabela.put("template", "side-scrolling");
         tabela.put("nome", null);

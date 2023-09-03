@@ -41,24 +41,6 @@ public interface MovUnityVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#options_teclado}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOptions_teclado(MovUnityParser.Options_tecladoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#custom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCustom(MovUnityParser.CustomContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MovUnityParser#teclas_custom}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTeclas_custom(MovUnityParser.Teclas_customContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link MovUnityParser#mouse}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -106,4 +88,16 @@ public interface MovUnityVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBotoes_teclado(MovUnityParser.Botoes_tecladoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MovUnityParser#custom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCustom(MovUnityParser.CustomContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MovUnityParser#teclas_custom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTeclas_custom(MovUnityParser.Teclas_customContext ctx);
 }

@@ -28,7 +28,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     "\n" +
                     "public class " +ctx.NOME().getText()+ ": MonoBehaviour\n" +
                     "{\n"+
-                "    private Rigidbody2D rb;\n" 
+                    "    private Rigidbody2D rb;\n" 
                 );
         this.template = verificarTemplate(ctx.templates());
         return super.visitGameobject(ctx); 
@@ -38,7 +38,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
     public Object visitDef_atributos(MovUnityParser.Def_atributosContext ctx) {
         if(template.equals("top-down"))
             saida.append("    private Vector2 move;\n" +
-                    "    private int vertical, horizontal;\n");
+                        "    private int vertical, horizontal;\n");
         else if(template.equals("side-scrolling"))
             saida.append("    private int horizontal;\n");
         
@@ -93,7 +93,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     "    }" 
         );
         saida.append("\n\n");
-        saida.append("     void Update()\n" +
+        saida.append("    void Update()\n" +
                     "    {\n" +
                     "        Movement();\n"
                     );
@@ -109,7 +109,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
 
     @Override
     public Object visitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx) {
-        saida.append("     void Movement()\n{\n");
+        saida.append("    void Movement()\n    {\n");
         if(existeEsq)
             saida.append("        if(isDashing) return;\n");
         if(template.equals("top-down")){
@@ -118,15 +118,15 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             
             String modo = verificarModosTeclado(ctx.modos_teclado());
             boolean diagonal;
-            if(!ctx.options_teclado().DIAGONAL().isEmpty())
-                diagonal = verificarParcelaLogica(ctx.options_teclado().parcela_logica().get(0)).equals("verdadeiro");
+            if(!ctx.DIAGONAL().isEmpty())
+                diagonal = verificarParcelaLogica(ctx.parcela_logica().get(0)).equals("verdadeiro");
             else
                 diagonal = true;
             
             
             if(modo.equals("WASD"))
             { 
-                saida.append("if(Input.GetKey(KeyCode.A)){\n" +
+                saida.append("        if(Input.GetKey(KeyCode.A)){\n" +
                             "            horizontal = -1;\n" +
                             "        } else if(Input.GetKey(KeyCode.D)){\n" +
                             "            horizontal =1;\n" +
@@ -144,11 +144,11 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     saida.append("            horizontal =0;\n");
                 
                 saida.append("        }\n" +
-                            "        move = new Vector2(horizontal, vertical);"
+                            "        move = new Vector2(horizontal, vertical);\n"
                 );
             } else if(modo.equals("FLECHAS"))
             { 
-                saida.append("if(Input.GetKey(KeyCode.LeftArrow)){\n" +
+                saida.append("    if(Input.GetKey(KeyCode.LeftArrow)){\n" +
                             "            horizontal = -1;\n" +
                             "        } else if(Input.GetKey(KeyCode.RightArrow)){\n" +
                             "            horizontal =1;\n" +
@@ -160,6 +160,27 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                     saida.append("            horizontal =0;\n");
                 
                 saida.append("        } else if(Input.GetKey(KeyCode.UpArrow)){\n" +
+                            "            vertical =1;\n");
+                
+                if(!diagonal)
+                    saida.append("            horizontal =0;\n");
+                
+                saida.append("        }\n" +
+                            "        move = new Vector2(horizontal, vertical);\n"
+                );
+            } else if(modo.equals("CUSTOM")){
+                saida.append("        if(Input.GetKey("+ ConverterParaKeyCode(ctx.modos_teclado().custom().teclas_custom().esquerda.getText()) +")){\n" +
+                            "            horizontal = -1;\n" +
+                            "        } else if(Input.GetKey("+ConverterParaKeyCode(ctx.modos_teclado().custom().teclas_custom().direita.getText()) +")){\n" +
+                            "            horizontal =1;\n" +
+                            "        }\n" +
+                            "\n" +
+                            "        if(Input.GetKey("+ConverterParaKeyCode(ctx.modos_teclado().custom().teclas_custom().baixo.getText())+")){\n" +
+                            "            vertical = -1;\n");
+                if(!diagonal)
+                    saida.append("            horizontal =0;\n");
+                
+                saida.append("        } else if(Input.GetKey("+ConverterParaKeyCode(ctx.modos_teclado().custom().teclas_custom().cima.getText())+")){\n" +
                             "            vertical =1;\n");
                 
                 if(!diagonal)
@@ -195,7 +216,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             else if(!existeAc && existeDesac){
                 saida.append("        else{\n" +
                             "            currentVelocity = move*speed;\n}\n"+
-                            "        rb.velocity = currentVelocity;\n"
+                            "            rb.velocity = currentVelocity;\n"
 
                 );
             }
@@ -232,11 +253,20 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                             "            horizontal = 1;\n" +
                             "        }\n");
             }
-            
+            else if(modo.equals("CUSTOM")){
+                saida.append("        if (Input.GetKey("+ConverterParaKeyCode(ctx.modos_teclado().custom().teclas_custom().esquerda.getText())+"))\n" +
+                            "        {\n" +
+                            "            horizontal = -1;\n" +
+                            "        }\n" +
+                            "        else if (Input.GetKey("+ConverterParaKeyCode(ctx.modos_teclado().custom().teclas_custom().direita.getText())+"))\n" +
+                            "        {\n" +
+                            "            horizontal = 1;\n" +
+                            "        }\n");
+            }
             
             
             if(!existeAc && !existeDesac)
-                saida.append("rb.velocity = new Vector2( horizontal*speed, rb.velocity.y);\n");
+                saida.append("        rb.velocity = new Vector2( horizontal*speed, rb.velocity.y);\n");
             else{
                 saida.append("        if(horizontal != 0)\n");
                 if(existeAc)
@@ -251,16 +281,16 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                 else
                     saida.append("            currentSpeed = 0;\n");
                 
-                saida.append("rb.velocity = new Vector2(currentSpeed, rb.velocity.y);");
+                saida.append("        rb.velocity = new Vector2(currentSpeed, rb.velocity.y);");
             }
         }
         
         
-        saida.append("}\n");
+        saida.append("    }\n");
         
         if(template.equals("side-scrolling")){
             saida.append("    void Jump(){\n");
-            saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.options_teclado().pulo)+"))\n" +
+            saida.append("        if (Input.GetKeyDown("+ConverterParaKeyCode(ctx.pulo)+"))\n" +
                             "        {\n" +
                             "            rb.velocity= new Vector2(rb.velocity.x, jump);\n" +
                             "        }\n");
@@ -269,7 +299,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         if(existeCorr){
             saida.append("    void Run(){\n");
-            saida.append("        if (Input.GetKey("+ConverterParaKeyCode(ctx.options_teclado().corrida)+"))\n" +
+            saida.append("        if (Input.GetKey("+ConverterParaKeyCode(ctx.corrida)+"))\n" +
                             "        {\n" +
                             "            speed = runningSpeed;\n" +
                             "        }\n");
@@ -282,7 +312,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         
         if(existeEsq){
             saida.append("    void Dash(){\n");
-            saida.append("          if(Input.GetKeyDown("+ConverterParaKeyCode(ctx.options_teclado().esquiva)+") && canDash){\n");
+            saida.append("          if(Input.GetKeyDown("+ConverterParaKeyCode(ctx.esquiva)+") && canDash){\n");
             saida.append("               StartCoroutine(Dashing());\n");
             saida.append("        }\n");
             saida.append("     }\n\n");
@@ -297,7 +327,7 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
                         "\n" +
                         "        yield return new WaitForSeconds(dashCooldown);\n" +
                         "        canDash = true;\n" +
-                        "    }");
+                        "    }\n");
         }
         
         saida.append("}");

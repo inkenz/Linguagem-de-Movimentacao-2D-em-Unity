@@ -55,7 +55,7 @@ public class MovUnityLexer extends Lexer {
 			"'gravidade'", "'aceleracao'", "'desaceleracao'", "'velocidade'", "'controle'", 
 			"'puloImpulso'", "'corridaVelocidade'", "'esquivaVelocidade'", "'esquivaDuracao'", 
 			"'esquivaEspera'", "'modo'", "'teclado'", "'mouse'", "'botao'", "'puloControle'", 
-			"'diagonal'", "'corridaControle'", "'esquivaControle'", "'WASD'", "'CUSTOM'", 
+			"'diagonal'", "'corridaControle'", "'esquivaControle'", "'WASD'", "'custom'", 
 			"'FLECHAS'", "'CLIQUE'", "'SEGUIR'", "'DIREITO'", "'ESQUERDO'", "'esquerda'", 
 			"'direita'", "'cima'", "'baixo'", null, "'FLECHA'", "'VERDADEIRO'", "'FALSO'", 
 			null, null, null, "':'", "'('", "')'", "'{'", "'}'"
@@ -406,9 +406,9 @@ public class MovUnityLexer extends Lexer {
 		"\u0168\u0005l\u0000\u0000\u0168\u0169\u0005e\u0000\u0000\u0169.\u0001"+
 		"\u0000\u0000\u0000\u016a\u016b\u0005W\u0000\u0000\u016b\u016c\u0005A\u0000"+
 		"\u0000\u016c\u016d\u0005S\u0000\u0000\u016d\u016e\u0005D\u0000\u0000\u016e"+
-		"0\u0001\u0000\u0000\u0000\u016f\u0170\u0005C\u0000\u0000\u0170\u0171\u0005"+
-		"U\u0000\u0000\u0171\u0172\u0005S\u0000\u0000\u0172\u0173\u0005T\u0000"+
-		"\u0000\u0173\u0174\u0005O\u0000\u0000\u0174\u0175\u0005M\u0000\u0000\u0175"+
+		"0\u0001\u0000\u0000\u0000\u016f\u0170\u0005c\u0000\u0000\u0170\u0171\u0005"+
+		"u\u0000\u0000\u0171\u0172\u0005s\u0000\u0000\u0172\u0173\u0005t\u0000"+
+		"\u0000\u0173\u0174\u0005o\u0000\u0000\u0174\u0175\u0005m\u0000\u0000\u0175"+
 		"2\u0001\u0000\u0000\u0000\u0176\u0177\u0005F\u0000\u0000\u0177\u0178\u0005"+
 		"L\u0000\u0000\u0178\u0179\u0005E\u0000\u0000\u0179\u017a\u0005C\u0000"+
 		"\u0000\u017a\u017b\u0005H\u0000\u0000\u017b\u017c\u0005A\u0000\u0000\u017c"+

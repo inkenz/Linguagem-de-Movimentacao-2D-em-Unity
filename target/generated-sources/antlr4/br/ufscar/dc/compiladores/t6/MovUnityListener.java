@@ -58,36 +58,6 @@ public interface MovUnityListener extends ParseTreeListener {
 	 */
 	void exitAttr_teclado(MovUnityParser.Attr_tecladoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#options_teclado}.
-	 * @param ctx the parse tree
-	 */
-	void enterOptions_teclado(MovUnityParser.Options_tecladoContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#options_teclado}.
-	 * @param ctx the parse tree
-	 */
-	void exitOptions_teclado(MovUnityParser.Options_tecladoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#custom}.
-	 * @param ctx the parse tree
-	 */
-	void enterCustom(MovUnityParser.CustomContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#custom}.
-	 * @param ctx the parse tree
-	 */
-	void exitCustom(MovUnityParser.CustomContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MovUnityParser#teclas_custom}.
-	 * @param ctx the parse tree
-	 */
-	void enterTeclas_custom(MovUnityParser.Teclas_customContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MovUnityParser#teclas_custom}.
-	 * @param ctx the parse tree
-	 */
-	void exitTeclas_custom(MovUnityParser.Teclas_customContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link MovUnityParser#mouse}.
 	 * @param ctx the parse tree
 	 */
@@ -167,4 +137,24 @@ public interface MovUnityListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBotoes_teclado(MovUnityParser.Botoes_tecladoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MovUnityParser#custom}.
+	 * @param ctx the parse tree
+	 */
+	void enterCustom(MovUnityParser.CustomContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MovUnityParser#custom}.
+	 * @param ctx the parse tree
+	 */
+	void exitCustom(MovUnityParser.CustomContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MovUnityParser#teclas_custom}.
+	 * @param ctx the parse tree
+	 */
+	void enterTeclas_custom(MovUnityParser.Teclas_customContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MovUnityParser#teclas_custom}.
+	 * @param ctx the parse tree
+	 */
+	void exitTeclas_custom(MovUnityParser.Teclas_customContext ctx);
 }

@@ -62,17 +62,17 @@ public class MovUnity
                 parser.removeErrorListeners();
                 MyCustomErrorListener mcel = new MyCustomErrorListener(pw);
                 parser.addErrorListener(mcel);
-
+                
                 parser.gameobject();
             }
-           
+            
             cs = CharStreams.fromFileName(args[0]);
             lex = new MovUnityLexer(cs);
             CommonTokenStream tokens = new CommonTokenStream(lex);
             MovUnityParser parser = new MovUnityParser(tokens);
-
+            
             parser.removeErrorListeners();
-
+            
             GameobjectContext arvore = parser.gameobject();
             MovUnitySemantico as = new MovUnitySemantico();
 

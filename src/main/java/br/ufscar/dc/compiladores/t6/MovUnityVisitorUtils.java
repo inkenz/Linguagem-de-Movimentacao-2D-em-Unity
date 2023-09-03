@@ -43,10 +43,10 @@ public class MovUnityVisitorUtils {
             return "WASD";
         }
         else if(ctx.FLECHAS() != null){
-            return "flechas";
+            return "FLECHAS";
         }
         else if(ctx.custom() != null){
-            return "custom";
+            return "CUSTOM";
         }
         
         return "";
@@ -77,6 +77,7 @@ public class MovUnityVisitorUtils {
     }
     
     
+    
     public static String verificarBotoesMouse(MovUnityParser.Botoes_mouseContext ctx)
     {
         if(ctx.DIREITO() != null){
@@ -91,13 +92,7 @@ public class MovUnityVisitorUtils {
     
     public static String ConverterParaKeyCode(String key)
     {
-        switch(key)
-        {
-            case "espaco":
-                return "KeyCode.Space";
-            default:
-                return "ERRO";
-        }
+        return "KeyCode."+key;
     }
     
     public static String ConverterParaKeyCode(MovUnityParser.Botoes_tecladoContext ctx)
