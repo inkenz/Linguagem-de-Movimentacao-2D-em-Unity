@@ -1,0 +1,13 @@
+GameObject(Exemplo4, SIDE-SCROLLING){
+	velocidade: 12
+	gravidade: 1
+	puloImpulso: 4
+	aceleracao: 20
+	controle: teclado{
+		modo: custom{
+			direita: D
+			esquerda:G
+		}
+		puloControle: ESPACO
+	}
+}

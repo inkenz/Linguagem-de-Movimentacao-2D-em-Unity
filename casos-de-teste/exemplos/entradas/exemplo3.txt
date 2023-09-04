@@ -1,0 +1,7 @@
+GameObject(Exemplo3, TOP-DOWN){
+	velocidade: 30
+	controle: mouse{
+		modo: CLIQUE
+		botao: ESQUERDO
+	}
+}

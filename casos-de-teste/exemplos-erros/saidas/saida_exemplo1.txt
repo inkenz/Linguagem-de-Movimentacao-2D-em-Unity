@@ -1,0 +1,2 @@
+Linha 3: comentario nao fechado
+Linha 3: O atributo velocidade é obrigatório

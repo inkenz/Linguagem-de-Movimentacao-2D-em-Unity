@@ -1,0 +1,11 @@
+GameObject(Exemplo2, SIDE-SCROLLING){
+	velocidade: 10
+	gravidade: 3
+	puloImpulso: 15
+	corridaVelocidade: 30
+	controle: teclado{
+		modo: WASD
+		puloControle: ESPACO
+		corridaControle: SHIFTESQ
+	}
+}

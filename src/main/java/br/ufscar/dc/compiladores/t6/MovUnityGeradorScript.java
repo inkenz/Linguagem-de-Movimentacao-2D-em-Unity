@@ -341,10 +341,10 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
         String modo = verificarModosMouse(ctx.modos_mouse());
         
         if(modo.equals("clique")){
-            saida.append("private Vector3 targetPosition;\n");
-            saida.append("private bool isMoving;\n");
+            saida.append("    private Vector3 targetPosition;\n");
+            saida.append("    private bool isMoving;\n");
         }
-        saida.append("     void Movement()\n{\n");
+        saida.append("    void Movement()\n    {\n");
         if(modo.equals("seguir"))
         {
             saida.append
@@ -364,24 +364,24 @@ public class MovUnityGeradorScript extends MovUnityBaseVisitor{
             {
                 saida.append("1");
             }
-            saida.append("))\n{\n");
+            saida.append("))\n        {\n");
             saida.append
             ("            move = Camera.main.ScreenToWorldPoint(Input.mousePosition);\n" +
             "            isMoving = true;\n" +
-            "        }");
+            "        } ");
             
             saida.append("if (isMoving)\n" +
-"        {");
+                        "        {\n");
             saida.append
-            ("        transform.position = Vector2.MoveTowards(transform.position, move, speed * Time.deltaTime);\n" +
-            "        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)\n" +
-            "        {\n" +
-            "            isMoving = false;\n" +
-            "        }\n");
-            saida.append("}\n");
+            ("            transform.position = Vector2.MoveTowards(transform.position, move, speed * Time.deltaTime);\n" +
+            "            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)\n" +
+            "            {\n" +
+            "                isMoving = false;\n" +
+            "            }\n");
+            saida.append("        }\n");
         }   
         
-        saida.append("}\n");
+        saida.append("    }\n");
         saida.append("}");
         return super.visitAttr_mouse(ctx);
     }

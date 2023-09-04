@@ -1,0 +1,6 @@
+GameObject(Nome, SIDE-SCROLLING){
+	velocidade: 12
+	controle: mouse{
+		modo: SEGUIR
+	}
+}

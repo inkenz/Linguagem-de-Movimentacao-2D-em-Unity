@@ -1,0 +1,2 @@
+Linha 3: O template escolhido não possui o atributo gravidade
+Linha 4: O template escolhido não possui o atributo puloImpulso

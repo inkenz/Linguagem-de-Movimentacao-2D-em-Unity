@@ -1,0 +1,8 @@
+
+GameObject(Nome, SIDE-SCROLLING){
+	[COMENTÁRIO FECHADO]
+	velocidade: -12
+	controle: mouse{
+		modo: SEGUIR
+	}
+}

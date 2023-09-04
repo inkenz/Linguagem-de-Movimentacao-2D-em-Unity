@@ -177,11 +177,17 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
             
             adicionarErro(erro);
         }
-           
-        if(!VerificarTabela(tabela)){
-            adicionarErro("Atributo "+RetornarAtributoFaltando(tabela)+" não declarado");
-        }
         
+        if(tabela.get("template").equals("TOP-DOWN")){
+            if(!VerificarTabela(tabela)){
+                adicionarErro("Atributo "+RetornarAtributoFaltando(tabela)+" não declarado");
+            }
+        }
+        else{
+            
+            adicionarErro("Tipo de controle incompatível ao template SIDE-SCROLLING");
+           
+        }
         return super.visitAttr_mouse(ctx); 
     }
     
@@ -282,7 +288,7 @@ public class MovUnitySemantico extends MovUnityBaseVisitor {
         // Insere os controles e checa se existe algum atributo faltando
         String template = tabela.get("template");
         
-        if(template.equals("side-scrolling") && (ctx.CIMA() != null || ctx.BAIXO() != null)){
+        if(template.equals("side-scrolling") && (!ctx.CIMA().isEmpty() || !ctx.BAIXO().isEmpty())){
             adicionarErroSemantico(ctx.start, "Atributo cima e baixo não pertence ao template side-scrolling");
         }
 

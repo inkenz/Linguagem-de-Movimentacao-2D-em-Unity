@@ -1,0 +1,1 @@
+Linha 7: Atributo cima e baixo não pertence ao template side-scrolling

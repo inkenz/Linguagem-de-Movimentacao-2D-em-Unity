@@ -1,0 +1,15 @@
+GameObject(Exemplo1, TOP-DOWN){
+	velocidade: 10
+	esquivaVelocidade: 40
+	esquivaDuracao: 0.25
+	esquivaEspera: 3
+	controle: teclado{
+		modo: custom{
+			esquerda: J
+			direita: L
+			cima: I
+			baixo: K
+		}
+		esquivaControle: CTRLESQ
+	}
+}

@@ -1,0 +1,2 @@
+Linha 4: valor negativo
+Linha 4: O atributo velocidade é obrigatório
