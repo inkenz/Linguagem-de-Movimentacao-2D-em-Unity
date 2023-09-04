@@ -1,3 +1,4 @@
+
 # Linguagem de Movimentação 2D em Unity
 
 Trabalho 6 da Disciplina de Construção de Compiladores 2023/01 UFSCar, criado usando o gerador de gramática ANTLR4 e programado em Java usando o NetBeans.
@@ -12,6 +13,9 @@ Trabalho 6 da Disciplina de Construção de Compiladores 2023/01 UFSCar, criado 
 Vídeo: [Youtube](https://youtu.be/1leQPrerZ_s)
 
 O trabalho consiste em um compilador para a Linguagem de Movimentação 2D em Unity,  que permite a criação de scripts de movimentação para GameObjects em Unity, utilizando uma linguagem de fácil escrita. Ele foi desenvolvido com o objetivo de simplificar o processo de criação de scripts de movimentação para jogos 2D em Unity, eliminando a necessidade de escrever diretamente em C# para tarefas comuns de movimentação.
+
+Na pasta casos-de-teste é possível ver exemplos de códigos escritos nessa linguagem e a saída que elas geram ao passar pelo compilador.
+
 ## Feito por:
 
   + Guilherme Calça - 790759
@@ -112,5 +116,5 @@ mvn package
 
 Para execução digite o comando:
 ```
-java -jar  target\linguagem-la-1.0-SNAPSHOT-jar-with-dependencies.jar [arquivo de entrada] [arquivo de saída]
+java -jar  target\movimento-unity-1.0-SNAPSHOT-jar-with-dependencies.jar  [arquivo de entrada] [arquivo de saída]
 ```
